@@ -58,10 +58,15 @@ The site is a plain static page with no build step or dependencies. It is hosted
 ```
 .
 ├── index.html                 # The page: markup, styles and metadata in one file
+├── 404.html                   # Page-not-found page (served by GitHub Pages)
+├── robots.txt                 # Crawler rules and sitemap location
+├── sitemap.xml                # Sitemap for search engines
+├── site.webmanifest           # App name, colours and icons
 ├── CNAME                      # Custom domain for GitHub Pages
 ├── LICENSE                    # GPL-3.0
 └── assets/
     ├── osm-syria-logo.svg     # Community logo (also the favicon)
+    ├── icon-48/192/512.png    # PNG icons (favicon, manifest, search-engine logo)
     ├── og-image.png           # 1200×630 image for link previews on social media
     └── apple-touch-icon.png   # Home-screen icon for phones
 ```

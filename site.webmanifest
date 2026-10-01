@@ -1,0 +1,17 @@
+{
+  "name": "OpenStreetMap Syria · مجتمع OpenStreetMap سوريا",
+  "short_name": "OSM Syria",
+  "description": "A volunteer community mapping Syria on OpenStreetMap.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#f6f5f1",
+  "theme_color": "#0c7c70",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/osm-syria-logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
