@@ -64,7 +64,7 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 ├── activities/douma-workshop/       # Activity page: Douma workshop
 ├── join/index.html                  # How to join
 ├── en/…                             # English version of every page above, same paths under /en/
-├── 404.html                         # Page-not-found page (served by GitHub Pages)
+├── 404.html                         # Page-not-found page (served by GitHub Pages); loads en/404.html under /en/
 ├── robots.txt                       # Crawler rules and sitemap location
 ├── sitemap.xml                      # Sitemap for search engines, with Arabic/English alternates
 ├── site.webmanifest                 # App name, colours and icons
@@ -85,7 +85,7 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 
 ### Preview locally
 
-Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. The exception is `404.html`, which GitHub Pages serves at any broken URL and so must keep root paths.
+Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. The exceptions are `404.html` and `en/404.html`: GitHub Pages serves them at any broken URL, so they must keep root paths.
 
 A local server works too, if you prefer one:
 
@@ -98,12 +98,12 @@ python3 -m http.server 8000
 
 - **Add an activity:** copy a card in `activities/index.html` and `en/activities/index.html`. Set `data-type` (`mapathon`, `meeting`, `workshop`, `webinar` or `article`), the matching `badge-…` and `cover-…` classes, and the date in `<time datetime="YYYY-MM-DD">`. Cards dated today or later appear under **Upcoming** automatically. Keep cards newest first. If it should also show on the home page, replace one of the three cards under "آخر الأنشطة" / "Latest activities".
 - **Add an activity page:** copy `activities/douma-workshop/` (and its `/en/` twin) to a new folder. Update the text, the `<title>`, the description, `canonical`, `hreflang` and Open Graph URLs, and the `Event` structured data. Turn the activity's cards into links (`<a class="card" href="…">`) and add both URLs to `sitemap.xml`.
-- **Change the header or footer:** they are repeated in every page (12 pages plus `404.html`), so make the same change in each.
+- **Change the header or footer:** they are repeated in every page (12 pages plus `404.html` and `en/404.html`), so make the same change in each.
 - **Add photos:** the dashed `[صورة]` / `[Photo]` boxes are placeholders. Replace each one with an `<img>` with descriptive `alt` text.
 
 ### Design notes
 
-- **Bilingual and right-to-left first:** Arabic pages use `lang="ar" dir="rtl"`; English pages under `/en/` use `lang="en" dir="ltr"` and swap which language is primary. The stylesheet uses logical properties (`margin-inline`, `inset-inline-start`, …) so the same CSS serves both directions. The header's EN / عربي link goes to the same page in the other language.
+- **One language per page, right-to-left first:** Arabic pages use `lang="ar" dir="rtl"` and English pages under `/en/` use `lang="en" dir="ltr"`. Each page is written entirely in its own language; don't add translations of the text in the other language. Only names (the OSM SYRIA wordmark, tool and platform names) stay as they are. The stylesheet uses logical properties (`margin-inline`, `inset-inline-start`, …) so the same CSS serves both directions. The header's EN / عربي link goes to the same page in the other language.
 - **Colours** come from the logo: teal `#0c7c70` / `#006560`, mint `#8fe0d3`, charcoal `#22242a` / `#21242a`, slate `#404e5e`, red `#c1272d`. They are defined once as CSS custom properties at the top of `site.css`.
 - **Fonts:** [Cairo](https://fonts.google.com/specimen/Cairo) for Arabic and headings, [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) for English text.
 - **SEO and sharing:** each page has its own title, description, canonical URL, Arabic/English `hreflang` alternates, Open Graph and Twitter Card tags, and schema.org structured data (`Organization` and `WebSite` on the home page, `Event` and `BreadcrumbList` on activity pages).
