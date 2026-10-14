@@ -85,7 +85,7 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 
 ### Preview locally
 
-Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. Links to other websites open in a new tab: give them `target="_blank" rel="noopener"`. The exceptions are `404.html` and `en/404.html`: GitHub Pages serves them at any broken URL, so they must keep root paths.
+Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. Online, `assets/js/site.js` removes `index.html` from these links and from the address bar, so visitors see clean URLs such as `openstreetmap.sy/about/`. Links to other websites open in a new tab: give them `target="_blank" rel="noopener"`. The exceptions are `404.html` and `en/404.html`: GitHub Pages serves them at any broken URL, so they must keep root paths.
 
 A local server works too, if you prefer one:
 

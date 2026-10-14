@@ -1,6 +1,20 @@
-/* Every page: the compact sticky header, and keeping the reading position when switching language. */
+/* Every page: clean URLs online, the compact sticky header, and keeping the reading position when switching language. */
 (function () {
   'use strict';
+
+  // Links name index.html so the site also works opened from disk. When it is served
+  // over the web, drop that file name from internal links and from the address bar.
+  if (/^https?:$/.test(location.protocol)) {
+    var INDEX = /(^|\/)index\.html(?=$|[?#])/;
+    Array.prototype.forEach.call(document.querySelectorAll('a[href]'), function (link) {
+      var href = link.getAttribute('href');
+      if (/^([a-z]+:|\/\/|#)/i.test(href) || !INDEX.test(href)) return;
+      link.setAttribute('href', href.replace(INDEX, '$1') || './');
+    });
+    if (INDEX.test(location.pathname)) {
+      history.replaceState(history.state, '', location.pathname.replace(INDEX, '$1') + location.search + location.hash);
+    }
+  }
 
   var header = document.querySelector('.site-header');
   if (!header) return;
