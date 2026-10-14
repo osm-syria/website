@@ -85,7 +85,9 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 
 ### Preview locally
 
-Pages link to each other with root paths (`/about/`, `/assets/…`), so open them through a local web server rather than as files:
+Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. The exception is `404.html`, which GitHub Pages serves at any broken URL and so must keep root paths.
+
+A local server works too, if you prefer one:
 
 ```sh
 python3 -m http.server 8000
