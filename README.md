@@ -85,7 +85,7 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 
 ### Preview locally
 
-Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. The exceptions are `404.html` and `en/404.html`: GitHub Pages serves them at any broken URL, so they must keep root paths.
+Open `index.html` directly in a browser; no server is needed. Pages link to each other and to `assets/` with relative paths, and folder links point at the page file itself (`about/index.html`, `../assets/css/site.css`), so the site works from disk as well as on GitHub Pages. Keep new links in that form: a root path such as `/about/` only works on a web server. Links to other websites open in a new tab: give them `target="_blank" rel="noopener"`. The exceptions are `404.html` and `en/404.html`: GitHub Pages serves them at any broken URL, so they must keep root paths.
 
 A local server works too, if you prefer one:
 
@@ -96,7 +96,11 @@ python3 -m http.server 8000
 
 ### Common edits
 
-- **Add an activity:** copy a card in `activities/index.html` and `en/activities/index.html`. Set `data-type` (`mapathon`, `meeting`, `workshop`, `webinar` or `article`), the matching `badge-…` and `cover-…` classes, and the date in `<time datetime="YYYY-MM-DD">`. Cards dated today or later appear under **Upcoming** automatically. Keep cards newest first. If it should also show on the home page, replace one of the three cards under "آخر الأنشطة" / "Latest activities".
+- **Add an activity:** copy a card in `activities/index.html` and `en/activities/index.html`. Set `data-type` (`mapathon`, `meeting`, `workshop`, `webinar` or `article`), the matching `badge-…` and `cover-…` classes, and the date in `<time datetime="YYYY-MM-DD">`. Cards dated today or later appear under **Upcoming** automatically. Each card has one of two covers:
+  - **With a recording:** make the card a link to the video (`<a class="card" href="https://www.youtube.com/watch?v=…">`) and use a `cover-video` cover with the thumbnail saved in `assets/img/activities/` (800×450 JPG named `YYYY-MM-DD-name.jpg`; take `https://i.ytimg.com/vi/<video id>/maxresdefault.jpg` and resize it).
+  - **Without a recording:** use a `cover-plain` cover: the type's colour and icon with a calendar tile showing the date. Copy one from a card of the same type and change the month and day.
+
+  Keep cards newest first. If it should also show on the home page, replace one of the three cards under "آخر الأنشطة" / "Latest activities".
 - **Add an activity page:** copy `activities/douma-workshop/` (and its `/en/` twin) to a new folder. Update the text, the `<title>`, the description, `canonical`, `hreflang` and Open Graph URLs, and the `Event` structured data. Turn the activity's cards into links (`<a class="card" href="…">`) and add both URLs to `sitemap.xml`.
 - **Change the header or footer:** they are repeated in every page (12 pages plus `404.html` and `en/404.html`), so make the same change in each.
 - **Add photos:** the dashed `[صورة]` / `[Photo]` boxes are placeholders. Replace each one with an `<img>` with descriptive `alt` text.
