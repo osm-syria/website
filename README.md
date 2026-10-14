@@ -102,6 +102,7 @@ python3 -m http.server 8000
 
   Keep cards newest first. If it should also show on the home page, replace one of the three cards under "آخر الأنشطة" / "Latest activities".
 - **Add an activity page:** copy `activities/douma-workshop/` (and its `/en/` twin) to a new folder. Update the text, the `<title>`, the description, `canonical`, `hreflang` and Open Graph URLs, and the `Event` structured data. Turn the activity's cards into links (`<a class="card" href="…">`) and add both URLs to `sitemap.xml`.
+- **Show an external page in a popup:** add `data-embed="Popup title"` to a link (as on the goals page's before-and-after comparisons). `assets/js/site.js` then opens it in an iframe popup instead of a new tab. Only use it for sites that allow being embedded.
 - **Change the header or footer:** they are repeated in every page (12 pages plus `404.html` and `en/404.html`), so make the same change in each.
 - **Add photos:** the dashed `[صورة]` / `[Photo]` boxes are placeholders. Replace each one with an `<img>` with descriptive `alt` text.
 

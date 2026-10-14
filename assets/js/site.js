@@ -16,6 +16,52 @@
     }
   }
 
+  // Links marked data-embed open in a popup with the page in an iframe, instead of a new tab.
+  // Without this script they still work as normal links.
+  var embedLinks = document.querySelectorAll('a[data-embed]');
+  if (embedLinks.length && window.HTMLDialogElement) {
+    var ar = document.documentElement.lang === 'ar';
+    var dialog = document.createElement('dialog');
+    dialog.className = 'embed-dialog';
+    dialog.innerHTML =
+      '<div class="embed-bar">' +
+        '<h2 class="embed-title"></h2>' +
+        '<a class="embed-out" target="_blank" rel="noopener">' + (ar ? 'افتح في تبويب جديد' : 'Open in a new tab') + '</a>' +
+        '<button type="button" class="embed-close" autofocus aria-label="' + (ar ? 'إغلاق' : 'Close') + '">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="embed-frame" data-loading="' + (ar ? 'جارٍ التحميل…' : 'Loading…') + '"><iframe allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe></div>';
+    document.body.appendChild(dialog);
+
+    var frame = dialog.querySelector('iframe');
+    var title = dialog.querySelector('.embed-title');
+    var out = dialog.querySelector('.embed-out');
+
+    Array.prototype.forEach.call(embedLinks, function (link) {
+      link.addEventListener('click', function (event) {
+        // Let ctrl/cmd/shift/middle clicks open the page normally
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        title.textContent = link.getAttribute('data-embed') || link.textContent.trim();
+        frame.title = title.textContent;
+        frame.src = link.href;
+        out.href = link.href;
+        dialog.showModal();
+        document.documentElement.classList.add('has-dialog');
+      });
+    });
+
+    dialog.querySelector('.embed-close').addEventListener('click', function () { dialog.close(); });
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) dialog.close();   // a click on the backdrop
+    });
+    dialog.addEventListener('close', function () {
+      document.documentElement.classList.remove('has-dialog');
+      frame.removeAttribute('src');                   // stop the embedded page
+    });
+  }
+
   var header = document.querySelector('.site-header');
   if (!header) return;
 
