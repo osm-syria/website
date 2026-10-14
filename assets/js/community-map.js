@@ -19,7 +19,7 @@
     aria: function (n, place) { return n + (n === 1 ? ' contributor' : ' contributors') + ' in ' + place + ' – select to zoom in'; }
   } : {
     labels: ['دمشق', 'حلب', 'الرقة', 'ريف دمشق', 'السويد', 'إندونيسيا', 'إسبانيا', 'إدلب', 'الإمارات', 'المملكة المتحدة', 'دير الزور', 'ألمانيا', 'كندا', 'فرنسا', 'السويداء', 'حمص', 'تركيا', 'النمسا', 'بلجيكا', 'مصر', 'أيرلندا', 'نيجيريا', 'الحسكة', 'لبنان', 'السعودية', 'إيطاليا', 'اليابان', 'طرطوس'],
-    num: function (n) { return String(n).replace(/\d/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }); },
+    num: String,
     count: function (n) { return this.num(n) + (n === 1 ? ' مساهم' : ' مساهمين'); },
     place: function (names) {
       if (names.length === 1) return names[0];
