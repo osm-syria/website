@@ -4,14 +4,116 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://openstreetmap.sy/</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/"/>
     <image:image>
       <image:loc>https://openstreetmap.sy/assets/og-image.png</image:loc>
     </image:image>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/about/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/about/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/goals/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/goals/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/goals/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/goals/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/activities/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/activities/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/activities/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/activities/douma-workshop/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/douma-workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/activities/douma-workshop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/activities/douma-workshop/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/join/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/join/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/join/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/join/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/"/>
+    <image:image>
+      <image:loc>https://openstreetmap.sy/assets/og-image.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/about/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/about/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/goals/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/goals/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/goals/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/goals/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/activities/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/activities/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/activities/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/activities/douma-workshop/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/douma-workshop/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/activities/douma-workshop/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/activities/douma-workshop/"/>
+  </url>
+  <url>
+    <loc>https://openstreetmap.sy/en/join/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/join/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://openstreetmap.sy/en/join/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://openstreetmap.sy/join/"/>
   </url>
 </urlset>

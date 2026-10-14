@@ -13,12 +13,12 @@
   <a href="https://openstreetmap.sy">openstreetmap.sy</a> ·
   <a href="https://t.me/OSMSyira">Telegram</a> ·
   <a href="https://wiki.openstreetmap.org/wiki/Syria">OSM Wiki</a> ·
-  <a href="https://forms.gle/M9F5hz7itZdFDDBS9">Join us</a>
+  <a href="https://forms.gle/d3k5zpYSSTCM16Ad6">Join us</a>
 </p>
 
 ---
 
-This is the source code of the website of the **OpenStreetMap Syria community (OSM Syria)**. At the moment the site is a bilingual (Arabic and English) "coming soon" page while the full website is being built.
+This is the source code of the website of the **OpenStreetMap Syria community (OSM Syria)**. The site has six pages (home, about, goals, activities, an activity page and join) in Arabic, with an English version of each under `/en/`.
 
 ## About the community
 
@@ -45,7 +45,7 @@ Most activities are in **Arabic**, and anyone can take part, whatever their nati
 
 | | |
 |---|---|
-| 📝 Join the community | [Registration form](https://forms.gle/M9F5hz7itZdFDDBS9) |
+| 📝 Join the community | [Registration form](https://forms.gle/d3k5zpYSSTCM16Ad6) |
 | 💬 Telegram channel | [t.me/OSMSyira](https://t.me/OSMSyira) |
 | 📖 OSM Wiki | [wiki.openstreetmap.org/wiki/Syria](https://wiki.openstreetmap.org/wiki/Syria) |
 | 🗒️ Meeting notes | [Google Doc](https://docs.google.com/document/d/1zjavmvoauSKdO8bOZHegefcna7cGwBe2Z-xL_7MVijw/edit) |
@@ -53,31 +53,60 @@ Most activities are in **Arabic**, and anyone can take part, whatever their nati
 
 ## The website
 
-The site is a plain static page with no build step or dependencies. It is hosted on **GitHub Pages** and served on the custom domain [openstreetmap.sy](https://openstreetmap.sy) (set in [`CNAME`](CNAME)).
+The site is plain HTML, CSS and JavaScript with no build step or dependencies. It is hosted on **GitHub Pages** and served on the custom domain [openstreetmap.sy](https://openstreetmap.sy) (set in [`CNAME`](CNAME)). Pushing to `develop` publishes a preview at [demo.openstreetmap.sy](https://demo.openstreetmap.sy).
 
 ```
 .
-├── index.html                 # The page: markup, styles and metadata in one file
-├── 404.html                   # Page-not-found page (served by GitHub Pages)
-├── robots.txt                 # Crawler rules and sitemap location
-├── sitemap.xml                # Sitemap for search engines
-├── site.webmanifest           # App name, colours and icons
-├── CNAME                      # Custom domain for GitHub Pages
-├── LICENSE                    # GPL-3.0
+├── index.html                       # Home (Arabic)
+├── about/index.html                 # About the community
+├── goals/index.html                 # Community goals
+├── activities/index.html            # All activities, with past/upcoming and type filters
+├── activities/douma-workshop/       # Activity page: Douma workshop
+├── join/index.html                  # How to join
+├── en/…                             # English version of every page above, same paths under /en/
+├── 404.html                         # Page-not-found page (served by GitHub Pages)
+├── robots.txt                       # Crawler rules and sitemap location
+├── sitemap.xml                      # Sitemap for search engines, with Arabic/English alternates
+├── site.webmanifest                 # App name, colours and icons
+├── CNAME                            # Custom domain for GitHub Pages
+├── LICENSE                          # GPL-3.0
 └── assets/
-    ├── osm-syria-logo.svg     # Community logo (also the favicon)
-    ├── icon-48/192/512.png    # PNG icons (favicon, manifest, search-engine logo)
-    ├── og-image.png           # 1200×630 image for link previews on social media
-    └── apple-touch-icon.png   # Home-screen icon for phones
+    ├── css/site.css                 # All styles, shared by every page and both languages
+    ├── js/activities.js             # Activities page filters
+    ├── js/community-map.js          # Home page contributor map (pan, zoom, clusters)
+    ├── img/osm-syria-mark.svg       # Logo mark used in the header, footer and banners
+    ├── img/syria.svg                # Map of Syria (home hero, community map overlay)
+    ├── img/world-dots.svg           # Dotted world map behind the community map
+    ├── osm-syria-logo.svg           # Full community logo (also the favicon)
+    ├── icon-48/192/512.png          # PNG icons (favicon, manifest, search-engine logo)
+    ├── og-image.png                 # 1200×630 image for link previews on social media
+    └── apple-touch-icon.png         # Home-screen icon for phones
 ```
+
+### Preview locally
+
+Pages link to each other with root paths (`/about/`, `/assets/…`), so open them through a local web server rather than as files:
+
+```sh
+python3 -m http.server 8000
+# then open http://localhost:8000
+```
+
+### Common edits
+
+- **Add an activity:** copy a card in `activities/index.html` and `en/activities/index.html`. Set `data-type` (`mapathon`, `meeting`, `workshop`, `webinar` or `article`), the matching `badge-…` and `cover-…` classes, and the date in `<time datetime="YYYY-MM-DD">`. Cards dated today or later appear under **Upcoming** automatically. Keep cards newest first. If it should also show on the home page, replace one of the three cards under "آخر الأنشطة" / "Latest activities".
+- **Add an activity page:** copy `activities/douma-workshop/` (and its `/en/` twin) to a new folder. Update the text, the `<title>`, the description, `canonical`, `hreflang` and Open Graph URLs, and the `Event` structured data. Turn the activity's cards into links (`<a class="card" href="…">`) and add both URLs to `sitemap.xml`.
+- **Change the header or footer:** they are repeated in every page (12 pages plus `404.html`), so make the same change in each.
+- **Add photos:** the dashed `[صورة]` / `[Photo]` boxes are placeholders. Replace each one with an `<img>` with descriptive `alt` text.
 
 ### Design notes
 
-- **Bilingual and right-to-left first:** the page uses `lang="ar" dir="rtl"`, with English text marked `lang="en" dir="ltr"`.
-- **Colours** come from the logo: teal `#0c7c70` / `#006560`, charcoal `#22242a`, slate `#404e5e`, red `#c1272d`.
-- **Font:** [IBM Plex Sans Arabic](https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic), which covers both Arabic and Latin script.
-- **SEO and sharing:** Open Graph and Twitter Card tags, plus schema.org `Organization` structured data.
-- **Accessibility:** works at phone width, shows focus outlines, and turns off animations for visitors who ask for reduced motion.
+- **Bilingual and right-to-left first:** Arabic pages use `lang="ar" dir="rtl"`; English pages under `/en/` use `lang="en" dir="ltr"` and swap which language is primary. The stylesheet uses logical properties (`margin-inline`, `inset-inline-start`, …) so the same CSS serves both directions. The header's EN / عربي link goes to the same page in the other language.
+- **Colours** come from the logo: teal `#0c7c70` / `#006560`, mint `#8fe0d3`, charcoal `#22242a` / `#21242a`, slate `#404e5e`, red `#c1272d`. They are defined once as CSS custom properties at the top of `site.css`.
+- **Fonts:** [Cairo](https://fonts.google.com/specimen/Cairo) for Arabic and headings, [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) for English text.
+- **SEO and sharing:** each page has its own title, description, canonical URL, Arabic/English `hreflang` alternates, Open Graph and Twitter Card tags, and schema.org structured data (`Organization` and `WebSite` on the home page, `Event` and `BreadcrumbList` on activity pages).
+- **Accessibility:** works at phone width, shows focus outlines, keeps content readable without JavaScript, and turns off animations for visitors who ask for reduced motion.
+- **Privacy:** the community map uses contributor locations rounded to about 20 km, with no names.
 
 ### Contributing
 
