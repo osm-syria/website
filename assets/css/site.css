@@ -506,6 +506,7 @@ a.card:hover .cover-video .play { transform: scale(1.08); }
 .goal { display: flex; flex-wrap: wrap; align-items: center; gap: 32px 64px; }
 .goal.reverse { flex-wrap: wrap-reverse; }
 .goal > * { flex: 1 1 420px; }
+.goal-photo { display: block; width: 100%; min-width: 0; height: auto; border-radius: 28px; background: var(--mist); }
 .goal-text { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 .goal-text h2 { margin: 0; font-size: clamp(28px, 3.4vw, 38px); line-height: 1.25; font-weight: 700; }
 .goal-text > p { margin: 0; font-size: 18px; color: var(--slate); }
