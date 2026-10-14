@@ -131,8 +131,9 @@ To get in touch first, ask in the [Telegram channel](https://t.me/OSMSyira).
 Thank you to everyone who has helped build this website:
 
 - **Omran Najjar** ([@omranlm](https://github.com/omranlm)): initial website, design and setup
+- **Mohamad** ([@SourceM7](https://github.com/SourceM7)): the bilingual website redesign: all pages, the stylesheet, the interactive community map and the activity filters
 
-See the full list on the [contributors page](https://github.com/osm-syria/website/graphs/contributors). If you contribute, add your name here in your pull request.
+GitHub's [contributors page](https://github.com/osm-syria/website/graphs/contributors) only lists people whose commit email is linked to their GitHub account, so this list is the complete one. If you contribute, add your name here in your pull request.
 
 ### OSM Syria community volunteers
 
