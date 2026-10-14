@@ -380,6 +380,28 @@ a.card:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 14p
 .cover-article { background-color: var(--teal-deep); }
 .ph-chip { font-size: 15px; color: var(--white); padding: 6px 14px; border-radius: 999px; border: 1px dashed rgba(255, 255, 255, .6); }
 .rec-chip { position: absolute; top: 12px; inset-inline-start: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: var(--white); color: var(--ink); font-size: 13px; font-weight: 700; }
+.rec-chip svg { color: var(--red); }
+
+/* Recorded activity: the video's thumbnail, with a play button; the card links to the recording */
+.cover-video { overflow: hidden; background-color: var(--night); }
+.cover-video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.cover-video::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(34, 36, 42, .35), rgba(34, 36, 42, 0) 45%, rgba(34, 36, 42, .25)); }
+.cover-video .play { position: relative; z-index: 1; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding-inline-start: 4px; background: rgba(255, 255, 255, .94); color: var(--red); box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .55); transition: transform .2s ease; }
+.cover-video .rec-chip { z-index: 1; }
+a.card:hover .cover-video img { transform: scale(1.04); }
+a.card:hover .cover-video .play { transform: scale(1.08); }
+
+/* Activity with a photo of its own */
+.cover-photo { overflow: hidden; background-color: var(--night); }
+.cover-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Activity without a recording: type colour, the type's icon as a watermark, and a calendar tile */
+.cover-plain { overflow: hidden; }
+.cover-plain .cover-icon { position: absolute; inset-inline-end: -6%; bottom: -18%; width: 56%; height: auto; color: rgba(255, 255, 255, .16); }
+.cover-date { position: relative; min-width: 112px; display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--white); text-align: center; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, .55); }
+.cover-date span { padding: 5px 16px; background: var(--red); color: var(--white); font-size: 14px; font-weight: 700; white-space: nowrap; }
+.cover-date b { padding: 4px 16px 10px; font-size: 46px; font-weight: 800; line-height: 1.15; color: var(--night); }
+[lang="en"] .cover-date { font-family: var(--font-en); }
 .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; }
 .card-meta time { color: var(--slate); font-weight: 600; }
@@ -408,7 +430,13 @@ a.card:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 14p
 .empty-state strong { font-size: 22px; font-weight: 700; }
 .empty-state span { font-size: 16px; color: var(--slate); }
 .empty-state .btn { min-height: 50px; padding: 0 22px; margin-top: 6px; font-size: 16px; }
-.fineprint { margin: 0; font-size: 15px; color: var(--slate); }
+/* The public community document, highlighted above the activity list */
+.records-callout { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; padding: clamp(22px, 3vw, 32px); border-radius: 24px; background: var(--mist); border-inline-start: 6px solid var(--teal); }
+.records-icon { flex: none; width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: var(--teal); color: var(--white); }
+.records-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 6px; }
+.records-text h2 { margin: 0; font-size: clamp(20px, 2.2vw, 24px); font-weight: 700; line-height: 1.4; }
+.records-text p { margin: 0; font-size: 16px; color: var(--slate); }
+.records-callout .btn { gap: 10px; }
 
 /* ---------- Join-the-community banner (home) and CTA bands ---------- */
 
@@ -433,6 +461,7 @@ a.card:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 14p
 .ratio-1-1 { aspect-ratio: 1 / 1; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; }
 .gallery .placeholder { border-radius: 24px; font-size: 15px; }
+.gallery-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 24px; background: var(--mist); }
 
 /* ---------- Two-column splits ---------- */
 
@@ -502,6 +531,8 @@ a.card:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 14p
 .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration: none; }
 .event-top { padding-top: 16px; padding-bottom: clamp(48px, 6vw, 72px); display: flex; flex-wrap: wrap; gap: 32px 48px; align-items: stretch; }
 .event-cover { flex: 1.3 1 480px; min-height: 360px; border-radius: 28px; background-color: var(--slate); display: flex; align-items: center; justify-content: center; }
+.event-cover.has-photo { position: relative; overflow: hidden; background-color: var(--night); }
+.event-cover.has-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .event-cover .ph-chip { font-size: 16px; padding: 8px 18px; border-color: rgba(255, 255, 255, .7); }
 .event-info { flex: 1 1 380px; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
 .event-info .badge { padding: 4px 14px; font-size: 14px; }
@@ -537,10 +568,6 @@ a.card:hover { color: var(--ink); transform: translateY(-3px); box-shadow: 0 14p
 [dir="rtl"] .tool-list { justify-content: flex-end; }
 .tool-list a { display: inline-flex; align-items: center; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; font-family: var(--font-en); }
 .tool-list a:hover { border-color: var(--teal); color: var(--teal); }
-.dark-card { flex: 1 1 340px; padding: 28px; border-radius: 24px; background-color: var(--night); color: var(--white); display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-.dark-card h2 { margin: 0; font-size: 24px; font-weight: 700; }
-.dark-card p { margin: 0; font-size: 16px; color: var(--line); }
-.dark-card .btn { min-height: 50px; padding: 0 22px; margin-top: 4px; font-size: 16px; }
 
 /* ---------- Join ---------- */
 
