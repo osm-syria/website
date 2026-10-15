@@ -718,3 +718,10 @@ html.has-dialog { overflow: hidden; }
   .lightbox-nav { top: auto; bottom: 18px; transform: none; width: 48px; height: 48px; }
   .lightbox-figure img { max-height: calc(100dvh - 190px); }
 }
+
+/* Banner shown only on the demo deployment (demo.openstreetmap.sy, see site.js) */
+.demo-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 16px; padding: 10px 16px; background: #fdf3d8; border-bottom: 1px solid #ecd9a3; color: var(--ink); font-size: 15px; text-align: center; }
+.demo-banner b { font-weight: 700; }
+.demo-banner a { font-weight: 700; color: var(--teal-deep); white-space: nowrap; }
+.footer-bottom .last-update { color: var(--line); }
+.footer-bottom .last-update[hidden] { display: none; }
