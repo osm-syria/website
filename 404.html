@@ -3,26 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>الصفحة غير موجودة · Page not found — OSM Syria</title>
+  <title>الصفحة غير موجودة · مجتمع OpenStreetMap سوريا</title>
+  <script>
+    // GitHub Pages serves this one page for every missing URL; show the English version under /en/.
+    if (location.pathname.indexOf('/en/') === 0) {
+      document.documentElement.style.visibility = 'hidden';
+      fetch('/en/404.html')
+        .then(function (r) { if (!r.ok) throw r; return r.text(); })
+        .then(function (html) { document.open(); document.write(html); document.close(); })
+        .catch(function () { document.documentElement.style.visibility = ''; });
+    }
+  </script>
   <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0c7c70">
   <link rel="icon" href="/assets/osm-syria-logo.svg" type="image/svg+xml">
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box;
-           background: #f6f5f1; color: #22242a; text-align: center;
-           font-family: "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif; }
-    h1 { font-size: 64px; margin: 0; color: #0c7c70; }
-    p { margin: 8px 0; color: #404e5e; }
-    a { display: inline-block; margin-top: 20px; padding: 12px 22px; border-radius: 12px;
-        background: #0c7c70; color: #fff; text-decoration: none; font-weight: 600; }
-    a:hover { background: #006560; }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
-  <main>
-    <h1>404</h1>
-    <p>يبدو أن هذا الطريق غير موجود على الخريطة بعد.</p>
-    <p lang="en" dir="ltr">Looks like this road isn't on the map yet.</p>
-    <a href="/">العودة إلى الصفحة الرئيسية · Back home</a>
+  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="OSM Syria Community · الرئيسية">
+        <img src="/assets/img/osm-syria-mark.svg" alt="" width="40" height="43">
+        <span class="wordmark" lang="en"><b>OSM SYRIA</b><small>COMMUNITY</small></span>
+      </a>
+      <nav class="main-nav" aria-label="القائمة الرئيسية">
+        <a href="/">الرئيسية</a>
+        <a href="/about/">عن المجتمع</a>
+        <a href="/goals/">أهداف المجتمع</a>
+        <a href="/activities/">الأنشطة</a>
+      </nav>
+      <div class="header-actions">
+        <a class="lang-switch" href="/en/" hreflang="en" lang="en">EN</a>
+        <a class="btn btn-teal btn-sm" href="/join/">انضم إلينا</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero dots on-dark">
+      <div class="hero-band hero-band-1" aria-hidden="true"></div>
+      <div class="hero-band hero-band-2" aria-hidden="true"></div>
+      <div class="container notfound">
+        <h1 class="code">404</h1>
+        <p>يبدو أن هذا الطريق غير موجود على الخريطة بعد.</p>
+        <div class="btn-row">
+          <a class="btn btn-teal" href="/">العودة إلى الصفحة الرئيسية</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer dots">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="brand-row">
+            <span class="mark-tile"><img src="/assets/img/osm-syria-mark.svg" alt="" width="36" height="39"></span>
+            <span class="wordmark" lang="en"><b>OSM SYRIA</b><small>COMMUNITY</small></span>
+          </span>
+          <p>مجتمع تطوعي مفتوح المصدر مبني حول OpenStreetMap. توثيق أنشطتنا واجتماعاتنا عام ومفتوح للجميع.</p>
+        </div>
+        <nav class="footer-nav" aria-label="صفحات الموقع">
+          <a href="/about/">عن المجتمع</a>
+          <a href="/goals/">أهداف المجتمع</a>
+          <a href="/activities/">الأنشطة</a>
+          <a href="/join/">انضم إلينا</a>
+        </nav>
+        <nav class="footer-nav" aria-label="روابط التواصل" lang="en">
+          <a href="https://t.me/OSMSyira" target="_blank" rel="noopener">Telegram</a>
+          <a href="https://www.linkedin.com/company/openstreetmap-sy/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://wiki.openstreetmap.org/wiki/Syria" target="_blank" rel="noopener">OSM Wiki</a>
+          <a href="https://tasks.hotosm.org/organisations/osm-syria" target="_blank" rel="noopener">HOT Tasking Manager</a>
+          <a href="https://github.com/osm-syria" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>صُنع بحبّ من متطوعي مجتمع OSM سوريا و<a href="https://github.com/osm-syria/website/graphs/contributors" target="_blank" rel="noopener">المساهمين في تطوير الموقع</a> · <span class="domain" lang="en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fe0d3" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>openstreetmap.sy</span></span>
+        <span>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">مساهمو OpenStreetMap</a></span>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

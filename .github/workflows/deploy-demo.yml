@@ -17,6 +17,8 @@ jobs:
         run: |
           mkdir -p /tmp/demo
           rsync -a --exclude .git --exclude .github --exclude .kilo ./ /tmp/demo/
+          # The copied CNAME names the production domain; give the demo its own
+          echo demo.openstreetmap.sy > /tmp/demo/CNAME
           # Keep the demo out of search engines
           printf 'User-agent: *\nDisallow: /\n' > /tmp/demo/robots.txt
           rm -f /tmp/demo/sitemap.xml
