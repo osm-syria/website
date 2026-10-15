@@ -47,6 +47,7 @@ Most activities are in **Arabic**, and anyone can take part, whatever their nati
 |---|---|
 | 📝 Join the community | [Registration form](https://forms.gle/d3k5zpYSSTCM16Ad6) |
 | 💬 Telegram channel | [t.me/OSMSyira](https://t.me/OSMSyira) |
+| 💼 LinkedIn | [linkedin.com/company/openstreetmap-sy](https://www.linkedin.com/company/openstreetmap-sy/) |
 | 📖 OSM Wiki | [wiki.openstreetmap.org/wiki/Syria](https://wiki.openstreetmap.org/wiki/Syria) |
 | 🗒️ Meeting notes | [Google Doc](https://docs.google.com/document/d/1zjavmvoauSKdO8bOZHegefcna7cGwBe2Z-xL_7MVijw/edit) |
 | 📂 Community drive | [Google Drive](https://drive.google.com/drive/folders/17T3hoYRolEoMWIaqdFQmdXLOSDU6EUu5) |
