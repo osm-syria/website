@@ -101,6 +101,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
   padding: 0 26px;
   border-radius: 14px;
   border: 1px solid transparent;
+  background: transparent;
   font: inherit;
   font-family: var(--font-ar);
   font-size: 17px;
@@ -725,3 +726,20 @@ html.has-dialog { overflow: hidden; }
 .demo-banner a { font-weight: 700; color: var(--teal-deep); white-space: nowrap; }
 .footer-bottom .last-update { color: var(--line); }
 .footer-bottom .last-update[hidden] { display: none; }
+
+/* Consent bar for visit statistics (see site.js; only on openstreetmap.sy once a GA ID is set) */
+.consent-bar { position: fixed; z-index: 20; inset-inline: 16px; bottom: 16px; max-width: 920px; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 16px 20px; border-radius: 18px; background: var(--night); color: var(--white); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .55); }
+.consent-bar p { flex: 1 1 360px; margin: 0; font-size: 15px; line-height: 1.6; }
+.consent-bar a { color: var(--mint); font-weight: 600; }
+.consent-actions { display: flex; gap: 10px; }
+
+/* Privacy page */
+.privacy { max-width: 780px; display: flex; flex-direction: column; gap: 14px; }
+.privacy h2 { margin: 22px 0 0; font-size: clamp(22px, 2.4vw, 26px); font-weight: 700; line-height: 1.35; }
+.privacy p { margin: 0; font-size: 17px; color: var(--slate); }
+.privacy .btn { align-self: flex-start; }
+.privacy-highlight { display: flex; gap: 16px; align-items: flex-start; padding: 22px 24px; border-radius: 20px; background: var(--mist); border-inline-start: 6px solid var(--teal); }
+.privacy-highlight svg { flex: none; color: var(--teal); margin-top: 2px; }
+.privacy-highlight b { display: block; font-size: 20px; font-weight: 700; color: var(--ink); }
+.privacy-highlight p { margin-top: 4px; font-size: 16px; }
+.privacy-updated { margin-top: 18px !important; font-size: 14px !important; }

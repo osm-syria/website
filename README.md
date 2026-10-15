@@ -109,6 +109,22 @@ python3 -m http.server 8000
 - **Change the header or footer:** they are repeated in every page (12 pages plus `404.html` and `en/404.html`), so make the same change in each.
 - **Add photos:** the dashed `[صورة]` / `[Photo]` boxes are placeholders. Replace each one with an `<img>` with descriptive `alt` text.
 
+### Visit statistics (Google Analytics)
+
+The site counts visits with Google Analytics 4, **only after the visitor accepts** in a consent bar. Declining (or not choosing) means nothing loads and nothing is sent. Statistics only run on `openstreetmap.sy`, never on the demo or a local copy. What is and isn't collected is explained on the privacy page (`privacy/` and `en/privacy/`); keep it accurate if you change any of the settings below.
+
+To switch it on:
+
+1. In [Google Analytics](https://analytics.google.com/), create a property for the community and a **Web** data stream for `https://openstreetmap.sy`. Copy its **Measurement ID** (`G-XXXXXXXXXX`).
+2. In the property's **Admin** settings, match what the privacy page promises:
+   - **Data collection**: leave **Google signals** off.
+   - **Data retention**: set event data retention to **2 months**.
+   - **Data collection → Granular location and device data**: optional, can be turned off for even less detail.
+   - Don't link the property to Google Ads.
+3. Paste the ID into `GA_ID` near the top of the statistics code in `assets/js/site.js`, then commit and deploy.
+
+The script also turns off ad storage, ad personalisation and Google signals, and sets the analytics cookie to expire after 6 months. Visitors can change their choice from the privacy page.
+
 ### Design notes
 
 - **One language per page, right-to-left first:** Arabic pages use `lang="ar" dir="rtl"` and English pages under `/en/` use `lang="en" dir="ltr"`. Each page is written entirely in its own language; don't add translations of the text in the other language. Both languages write numbers with the digits 0–9 (for example "26 أيلول 2026"), not the Eastern Arabic-Indic digits ٠–٩. Only names (the OSM SYRIA wordmark, tool and platform names) stay as they are. The stylesheet uses logical properties (`margin-inline`, `inset-inline-start`, …) so the same CSS serves both directions. The header's EN / عربي link goes to the same page in the other language.
