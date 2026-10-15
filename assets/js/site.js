@@ -16,6 +16,60 @@
     }
   }
 
+  // On the demo deployment (demo.openstreetmap.sy) only: a banner saying this is a demo,
+  // linking to the official site in the same tab.
+  if (/^demo\./i.test(location.hostname)) {
+    var arD = document.documentElement.lang === 'ar';
+    var banner = document.createElement('aside');
+    banner.className = 'demo-banner';
+    banner.setAttribute('aria-label', arD ? 'نسخة تجريبية' : 'Demo version');
+    banner.innerHTML = arD
+      ? '<span>هذه نسخة تجريبية من الموقع. الموقع الرسمي للمجتمع هو <b dir="ltr">openstreetmap.sy</b></span><a href="https://openstreetmap.sy/">انتقل إلى الموقع الرسمي</a>'
+      : '<span>This is a demo version of the website. The official community website is <b>openstreetmap.sy</b></span><a href="https://openstreetmap.sy/">Go to the official website</a>';
+    var skip = document.querySelector('.skip-link');
+    document.body.insertBefore(banner, skip ? skip.nextSibling : document.body.firstChild);
+  }
+
+  // Footer: copyright year, and the date of the latest change to the branch this site is
+  // published from (develop for the demo, main for the official site), read from GitHub's API.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copyright-year]'), function (node) {
+    var year = new Date().getFullYear();
+    if (year > +node.textContent) node.textContent = year;
+  });
+
+  var updated = document.querySelector('.last-update');
+  if (updated && /^https?:$/.test(location.protocol)) {
+    var branch = /^demo\./i.test(location.hostname) ? 'develop' : 'main';
+    var CACHE = 'osm-syria:last-update:' + branch;
+    var showDate = function (iso) {
+      var date = new Date(iso);
+      if (isNaN(date)) return;
+      var arU = document.documentElement.lang === 'ar';
+      var months = arU
+        ? ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
+        : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var time = updated.querySelector('time');
+      time.setAttribute('datetime', iso);
+      time.textContent = date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+      updated.querySelector('a').href = 'https://github.com/osm-syria/website/commits/' + branch + '/';
+      updated.hidden = false;
+    };
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE)); } catch (e) { /* storage blocked */ }
+    if (cached && Date.now() - cached.at < 3600000) {
+      showDate(cached.date);
+    } else if (window.fetch) {
+      fetch('https://api.github.com/repos/osm-syria/website/commits?sha=' + branch + '&per_page=1', { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { if (!r.ok) throw r; return r.json(); })
+        .then(function (commits) {
+          var iso = commits[0].commit.committer.date;
+          try { localStorage.setItem(CACHE, JSON.stringify({ date: iso, at: Date.now() })); } catch (e) { /* storage blocked */ }
+          showDate(iso);
+        })
+        .catch(function () { if (cached) showDate(cached.date); });   // offline or rate-limited: an older date beats none
+    }
+  }
+
   // Links marked data-embed open in a popup with the page in an iframe, instead of a new tab.
   // Without this script they still work as normal links.
   var embedLinks = document.querySelectorAll('a[data-embed]');
