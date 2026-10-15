@@ -16,6 +16,138 @@
     }
   }
 
+  // On the demo deployment (demo.openstreetmap.sy) only: a banner saying this is a demo,
+  // linking to the official site in the same tab.
+  if (/^demo\./i.test(location.hostname)) {
+    var arD = document.documentElement.lang === 'ar';
+    var banner = document.createElement('aside');
+    banner.className = 'demo-banner';
+    banner.setAttribute('aria-label', arD ? 'نسخة تجريبية' : 'Demo version');
+    banner.innerHTML = arD
+      ? '<span>هذه نسخة تجريبية من الموقع. الموقع الرسمي للمجتمع هو <b dir="ltr">openstreetmap.sy</b></span><a href="https://openstreetmap.sy/">انتقل إلى الموقع الرسمي</a>'
+      : '<span>This is a demo version of the website. The official community website is <b>openstreetmap.sy</b></span><a href="https://openstreetmap.sy/">Go to the official website</a>';
+    var skip = document.querySelector('.skip-link');
+    document.body.insertBefore(banner, skip ? skip.nextSibling : document.body.firstChild);
+  }
+
+  // Footer: copyright year, and the date of the latest change to the branch this site is
+  // published from (develop for the demo, main for the official site), read from GitHub's API.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copyright-year]'), function (node) {
+    var year = new Date().getFullYear();
+    if (year > +node.textContent) node.textContent = year;
+  });
+
+  var updated = document.querySelector('.last-update');
+  if (updated && /^https?:$/.test(location.protocol)) {
+    var branch = /^demo\./i.test(location.hostname) ? 'develop' : 'main';
+    var CACHE = 'osm-syria:last-update:' + branch;
+    var showDate = function (iso) {
+      var date = new Date(iso);
+      if (isNaN(date)) return;
+      var arU = document.documentElement.lang === 'ar';
+      var months = arU
+        ? ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
+        : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var time = updated.querySelector('time');
+      time.setAttribute('datetime', iso);
+      time.textContent = date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+      updated.querySelector('a').href = 'https://github.com/osm-syria/website/commits/' + branch + '/';
+      updated.hidden = false;
+    };
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE)); } catch (e) { /* storage blocked */ }
+    if (cached && Date.now() - cached.at < 3600000) {
+      showDate(cached.date);
+    } else if (window.fetch) {
+      fetch('https://api.github.com/repos/osm-syria/website/commits?sha=' + branch + '&per_page=1', { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { if (!r.ok) throw r; return r.json(); })
+        .then(function (commits) {
+          var iso = commits[0].commit.committer.date;
+          try { localStorage.setItem(CACHE, JSON.stringify({ date: iso, at: Date.now() })); } catch (e) { /* storage blocked */ }
+          showDate(iso);
+        })
+        .catch(function () { if (cached) showDate(cached.date); });   // offline or rate-limited: an older date beats none
+    }
+  }
+
+  // Visit statistics with Google Analytics, only after the visitor accepts.
+  // Paste the GA4 Measurement ID below (it looks like G-XXXXXXXXXX). Until then, and on any
+  // domain other than openstreetmap.sy (the demo, local copies), nothing loads and no banner shows.
+  var GA_ID = 'G-0JK1E7B6K9';
+  var CONSENT = 'osm-syria:analytics';
+  var analyticsOn = /^G-[A-Z0-9]+$/.test(GA_ID) && /^(www\.)?openstreetmap\.sy$/i.test(location.hostname);
+  var arA = document.documentElement.lang === 'ar';
+  var readChoice = function () { try { return localStorage.getItem(CONSENT); } catch (e) { return null; } };
+  var saveChoice = function (v) { try { if (v) localStorage.setItem(CONSENT, v); else localStorage.removeItem(CONSENT); } catch (e) { /* storage blocked */ } };
+
+  function loadAnalytics() {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    // Statistics only: nothing for advertising
+    window.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+    window.gtag('js', new Date());
+    window.gtag('config', GA_ID, { allow_google_signals: false, allow_ad_personalization_signals: false, cookie_expires: 180 * 24 * 3600 });
+    var tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(tag);
+  }
+
+  function askConsent() {
+    var privacy = (arA ? '' : 'en/');
+    var root = document.querySelector('link[rel="manifest"]');   // its href leads back to the site root from any page
+    var base = root ? root.getAttribute('href').replace(/site\.webmanifest$/, '') : '/';
+    var bar = document.createElement('aside');
+    bar.className = 'consent-bar';
+    bar.setAttribute('aria-label', arA ? 'إحصاء الزيارات' : 'Visit statistics');
+    bar.innerHTML =
+      '<p>' + (arA
+        ? 'نودّ إحصاء الزيارات عبر Google Analytics لتحسين الموقع. الإحصاء <b>مجهول الهوية</b>: لا نعرف أبداً من أنت، ولا يُجمع شيء ما لم توافق. <a href="' + base + 'privacy/">تفاصيل الخصوصية</a>'
+        : 'We’d like to count visits with Google Analytics to improve this website. It’s <b>anonymous</b>: we never know who you are, and nothing is collected unless you accept. <a href="' + base + privacy + 'privacy/">Privacy details</a>') +
+      '</p><div class="consent-actions">' +
+        '<button type="button" class="btn btn-teal btn-sm" data-consent="granted">' + (arA ? 'موافق' : 'Accept') + '</button>' +
+        '<button type="button" class="btn btn-outline-white btn-sm" data-consent="denied">' + (arA ? 'رفض' : 'Decline') + '</button>' +
+      '</div>';
+    bar.addEventListener('click', function (event) {
+      var button = event.target.closest('[data-consent]');
+      if (!button) return;
+      var choice = button.getAttribute('data-consent');
+      saveChoice(choice);
+      bar.remove();
+      if (choice === 'granted') loadAnalytics();
+    });
+    document.body.appendChild(bar);
+  }
+
+  if (analyticsOn) {
+    var choice = readChoice();
+    if (choice === 'granted') loadAnalytics();
+    else if (choice !== 'denied') askConsent();
+  }
+
+  // Privacy page: "Change my choice" forgets the choice, deletes the analytics cookies and asks again
+  var reset = document.querySelector('[data-analytics-reset]');
+  if (reset) {
+    if (analyticsOn) {
+      reset.hidden = false;
+      reset.addEventListener('click', function () {
+        saveChoice(null);
+        document.cookie.split(';').forEach(function (c) {
+          var name = c.split('=')[0].trim();
+          if (/^_ga/.test(name)) {
+            ['', '; domain=' + location.hostname, '; domain=.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
+              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
+            });
+          }
+        });
+        location.reload();
+      });
+    } else {
+      var off = document.querySelector('.analytics-off');
+      if (off) off.hidden = false;
+    }
+  }
+
   // Links marked data-embed open in a popup with the page in an iframe, instead of a new tab.
   // Without this script they still work as normal links.
   var embedLinks = document.querySelectorAll('a[data-embed]');
