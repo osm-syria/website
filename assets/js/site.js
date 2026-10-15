@@ -62,6 +62,69 @@
     });
   }
 
+  // Photo viewer: links marked data-lightbox open their full-size photo in a popup, with
+  // previous/next through the other photos in the same gallery. Without this script the
+  // link simply opens the photo.
+  var photoLinks = Array.prototype.slice.call(document.querySelectorAll('a[data-lightbox]'));
+  if (photoLinks.length && window.HTMLDialogElement) {
+    var arL = document.documentElement.lang === 'ar';
+    var box = document.createElement('dialog');
+    box.className = 'lightbox';
+    var arrow = function (d) { return '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
+    box.innerHTML =
+      '<button type="button" class="lightbox-close" autofocus aria-label="' + (arL ? 'إغلاق' : 'Close') + '">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
+      '<button type="button" class="lightbox-nav lightbox-prev" aria-label="' + (arL ? 'الصورة السابقة' : 'Previous photo') + '">' + arrow('m15 18-6-6 6-6') + '</button>' +
+      '<figure class="lightbox-figure"><img alt=""><figcaption></figcaption></figure>' +
+      '<button type="button" class="lightbox-nav lightbox-next" aria-label="' + (arL ? 'الصورة التالية' : 'Next photo') + '">' + arrow('m9 18 6-6-6-6') + '</button>';
+    document.body.appendChild(box);
+
+    var boxImg = box.querySelector('img');
+    var boxCaption = box.querySelector('figcaption');
+    var group = [], current = 0;
+
+    function showPhoto(i) {
+      current = (i + group.length) % group.length;
+      var link = group[current], thumb = link.querySelector('img');
+      boxImg.src = link.href;
+      boxImg.alt = thumb ? thumb.alt : '';
+      // Written out in Arabic: a right-to-left "2 / 3" would display as "3 / 2"
+      var count = arL ? (current + 1) + ' من ' + group.length : (current + 1) + ' / ' + group.length;
+      boxCaption.textContent = (thumb ? thumb.alt : '') + (group.length > 1 ? '  ·  ' + count : '');
+    }
+
+    photoLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        var gallery = link.closest('.gallery') || document.body;
+        group = photoLinks.filter(function (l) { return gallery.contains(l); });
+        box.classList.toggle('single', group.length < 2);
+        showPhoto(group.indexOf(link));
+        box.showModal();
+        document.documentElement.classList.add('has-dialog');
+      });
+    });
+
+    // In a right-to-left page the "previous" button sits on the right, so it still points backwards
+    box.querySelector('.lightbox-prev').addEventListener('click', function () { showPhoto(current - 1); });
+    box.querySelector('.lightbox-next').addEventListener('click', function () { showPhoto(current + 1); });
+    box.querySelector('.lightbox-close').addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (event) {
+      if (event.target === box || event.target.classList.contains('lightbox-figure')) box.close();
+    });
+    box.addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      var forward = (event.key === 'ArrowRight') !== arL;   // the arrows follow the reading direction
+      showPhoto(current + (forward ? 1 : -1));
+      event.preventDefault();
+    });
+    box.addEventListener('close', function () {
+      document.documentElement.classList.remove('has-dialog');
+      boxImg.removeAttribute('src');
+    });
+  }
+
   var header = document.querySelector('.site-header');
   if (!header) return;
 

@@ -461,11 +461,17 @@ a.card:hover .cover-video .play { transform: scale(1.08); }
 .gallery-photo.square { aspect-ratio: 1 / 1; }
 /* A wide photo across two columns beside two squares, all one row high */
 .gallery.mosaic { grid-template-columns: repeat(4, 1fr); }
-.gallery-photo.wide { grid-column: span 2; aspect-ratio: auto; height: 100%; }
+.gallery-photo.wide { aspect-ratio: auto; height: 100%; }
+.gallery-link.wide { grid-column: span 2; }
 @media (max-width: 720px) {
   .gallery.mosaic { grid-template-columns: repeat(2, 1fr); }
   .gallery-photo.wide { aspect-ratio: 2.05 / 1; height: auto; }
 }
+/* Clickable gallery photos (open in the photo viewer, see site.js) */
+.gallery-link { display: block; border-radius: 24px; overflow: hidden; cursor: zoom-in; }
+.gallery-link .gallery-photo { border-radius: 0; transition: transform .3s ease; }
+.gallery-link:hover .gallery-photo { transform: scale(1.03); }
+.gallery-link:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
 
 /* ---------- Two-column splits ---------- */
 
@@ -661,4 +667,54 @@ html.has-dialog { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ---------- About: member registrations chart (drawn by registrations-chart.js) ---------- */
+
+.growth-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 40px; }
+.growth-lead { margin: 0; font-size: 18px; color: var(--slate); }
+.growth-figure { margin: 0; display: flex; align-items: center; gap: 14px; }
+.growth-figure b { font-size: clamp(48px, 6vw, 64px); font-weight: 800; line-height: 1; color: var(--ink); }
+.growth-figure span { display: flex; flex-direction: column; font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+.growth-figure small { font-size: 14px; font-weight: 500; color: var(--slate); }
+.chart-card { margin: 0; padding: clamp(18px, 3vw, 28px); border-radius: 24px; border: 1px solid var(--line); background: var(--white); display: flex; flex-direction: column; gap: 14px; }
+.chart-plot { position: relative; min-height: 240px; }
+.chart-plot svg { display: block; overflow: visible; font-family: inherit; }
+.chart-plot .grid { stroke: #ebebeb; stroke-width: 1; }
+.chart-plot .baseline { stroke: #bdbdbd; stroke-width: 1; }
+.chart-plot .tick { font-size: 12.5px; fill: var(--slate); font-variant-numeric: tabular-nums; }
+.chart-plot .value { font-size: 15px; font-weight: 700; fill: var(--ink); }
+.chart-plot .area { fill: var(--teal); fill-opacity: .1; }
+.chart-plot .line { fill: none; stroke: var(--teal); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart-plot .dot { fill: var(--teal); stroke: var(--white); stroke-width: 2; }
+.chart-plot .cross { stroke: var(--slate); stroke-width: 1; }
+.chart-tip { position: absolute; pointer-events: none; display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: 12px; background: var(--night); color: var(--white); font-size: 13px; line-height: 1.4; white-space: nowrap; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .5); }
+.chart-tip b { font-size: 15px; }
+.chart-note { font-size: 14px; color: var(--slate); }
+.chart-table summary { cursor: pointer; font-size: 15px; font-weight: 600; color: var(--teal); }
+.chart-table table { margin-top: 12px; width: 100%; max-width: 420px; border-collapse: collapse; font-size: 15px; }
+.chart-table th, .chart-table td { padding: 6px 10px; border-bottom: 1px solid var(--mist); text-align: start; }
+.chart-table thead th { color: var(--slate); font-weight: 600; }
+.chart-table tbody th { font-weight: 500; }
+.chart-table td { font-variant-numeric: tabular-nums; }
+
+/* Photo viewer popup (links marked data-lightbox, see site.js) */
+.lightbox { width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: var(--white); }
+.lightbox[open] { display: flex; align-items: center; justify-content: center; }
+.lightbox::backdrop { background: rgba(20, 22, 26, .92); }
+.lightbox-figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 64px 84px 24px; max-width: 100%; max-height: 100%; }
+.lightbox-figure img { display: block; max-width: 100%; max-height: calc(100dvh - 150px); width: auto; height: auto; border-radius: 12px; box-shadow: 0 20px 60px -20px rgba(0, 0, 0, .7); }
+.lightbox-figure figcaption { font-size: 15px; color: var(--line); text-align: center; }
+.lightbox-close, .lightbox-nav { position: fixed; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .12); color: var(--white); cursor: pointer; }
+.lightbox-close:hover, .lightbox-nav:hover { background: rgba(255, 255, 255, .24); }
+.lightbox-close { top: 16px; inset-inline-end: 16px; width: 48px; height: 48px; }
+.lightbox-nav { top: 50%; transform: translateY(-50%); width: 56px; height: 56px; }
+.lightbox-prev { inset-inline-start: 16px; }
+.lightbox-next { inset-inline-end: 16px; }
+[dir="rtl"] .lightbox-nav svg { transform: scaleX(-1); }
+.lightbox.single .lightbox-nav { display: none; }
+@media (max-width: 720px) {
+  .lightbox-figure { padding: 72px 12px 24px; }
+  .lightbox-nav { top: auto; bottom: 18px; transform: none; width: 48px; height: 48px; }
+  .lightbox-figure img { max-height: calc(100dvh - 190px); }
 }
