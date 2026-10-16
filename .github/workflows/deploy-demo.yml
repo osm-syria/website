@@ -19,8 +19,11 @@ jobs:
           rsync -a --exclude .git --exclude .github --exclude .kilo ./ /tmp/demo/
           # The copied CNAME names the production domain; give the demo its own
           echo demo.openstreetmap.sy > /tmp/demo/CNAME
-          # Keep the demo out of search engines
-          printf 'User-agent: *\nDisallow: /\n' > /tmp/demo/robots.txt
+          # Keep the demo out of search results without competing with openstreetmap.sy:
+          # crawlers may read the pages (so they see the noindex), but every page says noindex
+          # and its canonical URL already points at the official site.
+          printf 'User-agent: *\nAllow: /\n' > /tmp/demo/robots.txt
+          find /tmp/demo -name '*.html' -exec sed -i 's|<meta name="robots" content="[^"]*">|<meta name="robots" content="noindex, follow">|' {} +
           rm -f /tmp/demo/sitemap.xml
 
       - uses: peaceiris/actions-gh-pages@v4
