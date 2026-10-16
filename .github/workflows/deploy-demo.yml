@@ -31,5 +31,8 @@ jobs:
           deploy_key: ${{ secrets.DEMO_DEPLOY_KEY }}
           external_repository: osm-syria/website-demo
           publish_branch: gh-pages
+          # Publish each deploy as a single fresh commit: the demo branch keeps no history,
+          # so files removed from the site (such as original photos) don't linger there
+          force_orphan: true
           publish_dir: /tmp/demo
           cname: demo.openstreetmap.sy

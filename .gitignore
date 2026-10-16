@@ -1,0 +1,7 @@
+# Original photos straight from a camera or phone are large and usually contain GPS
+# location data. Keep them outside the repository and commit only the web copies
+# (resized, location data removed, named YYYY-MM-DD-name.jpg / .webp, no spaces).
+# Files with spaces in their names are originals or exports, not web copies:
+assets/img/**/* *
+# Phone photos in HEIC format are never used directly by the site
+assets/img/**/*.heic
