@@ -182,6 +182,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -297,16 +299,13 @@
         </div>
         <div class="map-card">
           <div class="map-view" role="group" tabindex="-1" aria-label="خريطة تفاعلية لمواقع مساهمي المجتمع">
-            <div class="map-stage">
-              <img class="map-world" src="assets/img/world-dots.svg" alt="" draggable="false">
-              <img class="map-syria" src="assets/img/syria.svg" alt="" draggable="false">
-            </div>
-            <div class="map-tip" dir="rtl" hidden><b></b><span></span></div>
           </div>
           <div class="map-regions" role="group" aria-label="مناطق">
             <button type="button" class="map-btn" data-map="world">العالم</button>
-            <button type="button" class="map-btn" data-map="europe">أوروبا والشرق الأوسط</button>
+            <button type="button" class="map-btn" data-map="levant">أوروبا وبلاد الشام</button>
             <button type="button" class="map-btn" data-map="syria">سوريا</button>
+            <button type="button" class="map-btn" data-map="damascus">دمشق</button>
+            <button type="button" class="map-btn" data-map="aleppo">حلب</button>
           </div>
           <div class="map-zoom" role="group" aria-label="التكبير">
             <button type="button" class="map-btn" data-map="in" aria-label="تكبير">+</button>
@@ -315,38 +314,38 @@
           </div>
           <div class="map-legend">
             <span class="dot">مساهمون · الرقم عددهم</span>
-            <span>اسحب للتحريك · انقر مرتين أو على نقطة للتكبير</span>
+            <span>اسحب للتحريك · استخدم عجلة الفأرة أو انقر مرتين أو على نقطة للتكبير</span>
           </div>
         </div>
         <div class="grid-3">
           <div class="stat-card stats">
-            <div class="stat"><b>101</b><span>موقعاً على خريطة المجتمع</span></div>
+            <div class="stat"><b>103</b><span>موقعاً على خريطة المجتمع</span></div>
             <div class="stat"><b>19</b><span>دولة</span></div>
-            <div class="stat"><b>58%</b><span>داخل سوريا</span></div>
-            <p class="stat-note">المواقع مجمّعة في مناطق تقريبية حفاظاً على خصوصية الأعضاء. المصدر: خريطة المجتمع على uMap.</p>
+            <div class="stat"><b>59%</b><span>داخل سوريا</span></div>
+            <p class="stat-note">كل نقطة مكانٌ أضاف فيه أحد الأعضاء نفسه إلى خريطة المجتمع، دون عرض الأسماء. المصدر: خريطة المجتمع على uMap، آخر تحديث 20 تشرين الأول 2026.</p>
           </div>
           <div class="stat-card">
             <h3>حسب الدولة</h3>
           <ul class="bars">
-            <li><span class="name">سوريا</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">59</span></li>
-            <li><span class="name">تركيا</span><span class="track"><span class="fill" style="width: 22%"></span></span><span class="n">13</span></li>
-            <li><span class="name">فرنسا</span><span class="track"><span class="fill" style="width: 12%"></span></span><span class="n">7</span></li>
-            <li><span class="name">ألمانيا</span><span class="track"><span class="fill" style="width: 8.5%"></span></span><span class="n">5</span></li>
-            <li><span class="name">إسبانيا</span><span class="track"><span class="fill" style="width: 3.4%"></span></span><span class="n">2</span></li>
-            <li><span class="name">السعودية</span><span class="track"><span class="fill" style="width: 3.4%"></span></span><span class="n">2</span></li>
+            <li><span class="name">سوريا</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">61</span></li>
+            <li><span class="name">تركيا</span><span class="track"><span class="fill" style="width: 21.3%"></span></span><span class="n">13</span></li>
+            <li><span class="name">فرنسا</span><span class="track"><span class="fill" style="width: 11.5%"></span></span><span class="n">7</span></li>
+            <li><span class="name">ألمانيا</span><span class="track"><span class="fill" style="width: 8.2%"></span></span><span class="n">5</span></li>
+            <li><span class="name">إسبانيا</span><span class="track"><span class="fill" style="width: 3.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">السعودية</span><span class="track"><span class="fill" style="width: 3.3%"></span></span><span class="n">2</span></li>
           </ul>
             <p class="stat-more">ومساهم واحد في كل من: السويد، إندونيسيا، الإمارات، المملكة المتحدة، كندا، النمسا، بلجيكا، مصر، أيرلندا، نيجيريا، لبنان، إيطاليا، اليابان.</p>
           </div>
           <div class="stat-card">
             <h3>داخل سوريا حسب المحافظة</h3>
           <ul class="bars teal">
-            <li><span class="name">ريف دمشق</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">25</span></li>
-            <li><span class="name">دمشق</span><span class="track"><span class="fill" style="width: 60%"></span></span><span class="n">15</span></li>
-            <li><span class="name">حلب</span><span class="track"><span class="fill" style="width: 28%"></span></span><span class="n">7</span></li>
-            <li><span class="name">إدلب</span><span class="track"><span class="fill" style="width: 12%"></span></span><span class="n">3</span></li>
-            <li><span class="name">حمص</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
-            <li><span class="name">الرقة</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
-            <li><span class="name">السويداء</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
+            <li><span class="name">ريف دمشق</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">24</span></li>
+            <li><span class="name">دمشق</span><span class="track"><span class="fill" style="width: 70.8%"></span></span><span class="n">17</span></li>
+            <li><span class="name">حلب</span><span class="track"><span class="fill" style="width: 33.3%"></span></span><span class="n">8</span></li>
+            <li><span class="name">إدلب</span><span class="track"><span class="fill" style="width: 12.5%"></span></span><span class="n">3</span></li>
+            <li><span class="name">حمص</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">الرقة</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">السويداء</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
           </ul>
             <p class="stat-more">ومساهم واحد في كل من: دير الزور، الحسكة، طرطوس.</p>
           </div>
@@ -473,6 +472,7 @@
       </div>
     </div>
   </footer>
+  <script src="assets/vendor/leaflet/leaflet.js" defer></script>
   <script src="assets/js/community-map.js" defer></script>
   <script src="assets/js/site.js" defer></script>
 </body>

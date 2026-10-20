@@ -182,6 +182,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="stylesheet" href="../assets/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
@@ -297,16 +299,13 @@
         </div>
         <div class="map-card">
           <div class="map-view" role="group" tabindex="-1" aria-label="Interactive map of where community contributors are">
-            <div class="map-stage">
-              <img class="map-world" src="../assets/img/world-dots.svg" alt="" draggable="false">
-              <img class="map-syria" src="../assets/img/syria.svg" alt="" draggable="false">
-            </div>
-            <div class="map-tip" dir="ltr" hidden><b></b><span></span></div>
           </div>
           <div class="map-regions" role="group" aria-label="Regions">
             <button type="button" class="map-btn" data-map="world">World</button>
-            <button type="button" class="map-btn" data-map="europe">Europe &amp; Middle East</button>
+            <button type="button" class="map-btn" data-map="levant">Europe &amp; the Levant</button>
             <button type="button" class="map-btn" data-map="syria">Syria</button>
+            <button type="button" class="map-btn" data-map="damascus">Damascus</button>
+            <button type="button" class="map-btn" data-map="aleppo">Aleppo</button>
           </div>
           <div class="map-zoom" role="group" aria-label="Zoom">
             <button type="button" class="map-btn" data-map="in" aria-label="Zoom in">+</button>
@@ -315,38 +314,38 @@
           </div>
           <div class="map-legend">
             <span class="dot">Contributors · the number shows how many</span>
-            <span>Drag to move · double-click or select a dot to zoom in</span>
+            <span>Drag to move · scroll, double-click or select a dot to zoom</span>
           </div>
         </div>
         <div class="grid-3">
           <div class="stat-card stats">
-            <div class="stat"><b>101</b><span>locations on the community map</span></div>
+            <div class="stat"><b>103</b><span>locations on the community map</span></div>
             <div class="stat"><b>19</b><span>countries</span></div>
-            <div class="stat"><b>58%</b><span>inside Syria</span></div>
-            <p class="stat-note">Locations are grouped into approximate areas to protect members’ privacy. Source: the community map on uMap.</p>
+            <div class="stat"><b>59%</b><span>inside Syria</span></div>
+            <p class="stat-note">Each dot is a place where a member added themselves to the community map; names are not shown. Source: the community map on uMap, updated 20 October 2026.</p>
           </div>
           <div class="stat-card">
             <h3>By country</h3>
           <ul class="bars">
-            <li><span class="name">Syria</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">59</span></li>
-            <li><span class="name">Turkey</span><span class="track"><span class="fill" style="width: 22%"></span></span><span class="n">13</span></li>
-            <li><span class="name">France</span><span class="track"><span class="fill" style="width: 12%"></span></span><span class="n">7</span></li>
-            <li><span class="name">Germany</span><span class="track"><span class="fill" style="width: 8.5%"></span></span><span class="n">5</span></li>
-            <li><span class="name">Spain</span><span class="track"><span class="fill" style="width: 3.4%"></span></span><span class="n">2</span></li>
-            <li><span class="name">Saudi Arabia</span><span class="track"><span class="fill" style="width: 3.4%"></span></span><span class="n">2</span></li>
+            <li><span class="name">Syria</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">61</span></li>
+            <li><span class="name">Turkey</span><span class="track"><span class="fill" style="width: 21.3%"></span></span><span class="n">13</span></li>
+            <li><span class="name">France</span><span class="track"><span class="fill" style="width: 11.5%"></span></span><span class="n">7</span></li>
+            <li><span class="name">Germany</span><span class="track"><span class="fill" style="width: 8.2%"></span></span><span class="n">5</span></li>
+            <li><span class="name">Spain</span><span class="track"><span class="fill" style="width: 3.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">Saudi Arabia</span><span class="track"><span class="fill" style="width: 3.3%"></span></span><span class="n">2</span></li>
           </ul>
             <p class="stat-more">And one contributor each in Sweden, Indonesia, the UAE, the United Kingdom, Canada, Austria, Belgium, Egypt, Ireland, Nigeria, Lebanon, Italy and Japan.</p>
           </div>
           <div class="stat-card">
             <h3>Inside Syria, by governorate</h3>
           <ul class="bars teal">
-            <li><span class="name">Rural Damascus</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">25</span></li>
-            <li><span class="name">Damascus</span><span class="track"><span class="fill" style="width: 60%"></span></span><span class="n">15</span></li>
-            <li><span class="name">Aleppo</span><span class="track"><span class="fill" style="width: 28%"></span></span><span class="n">7</span></li>
-            <li><span class="name">Idlib</span><span class="track"><span class="fill" style="width: 12%"></span></span><span class="n">3</span></li>
-            <li><span class="name">Homs</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
-            <li><span class="name">Raqqa</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
-            <li><span class="name">As-Suwayda</span><span class="track"><span class="fill" style="width: 8%"></span></span><span class="n">2</span></li>
+            <li><span class="name">Rural Damascus</span><span class="track"><span class="fill" style="width: 100%"></span></span><span class="n">24</span></li>
+            <li><span class="name">Damascus</span><span class="track"><span class="fill" style="width: 70.8%"></span></span><span class="n">17</span></li>
+            <li><span class="name">Aleppo</span><span class="track"><span class="fill" style="width: 33.3%"></span></span><span class="n">8</span></li>
+            <li><span class="name">Idlib</span><span class="track"><span class="fill" style="width: 12.5%"></span></span><span class="n">3</span></li>
+            <li><span class="name">Homs</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">Raqqa</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
+            <li><span class="name">As-Suwayda</span><span class="track"><span class="fill" style="width: 8.3%"></span></span><span class="n">2</span></li>
           </ul>
             <p class="stat-more">And one each in Deir ez-Zor, Al-Hasakah and Tartus.</p>
           </div>
@@ -473,6 +472,7 @@
       </div>
     </div>
   </footer>
+  <script src="../assets/vendor/leaflet/leaflet.js" defer></script>
   <script src="../assets/js/community-map.js" defer></script>
   <script src="../assets/js/site.js" defer></script>
 </body>
