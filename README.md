@@ -74,10 +74,10 @@ The site is plain HTML, CSS and JavaScript with no build step or dependencies. I
 └── assets/
     ├── css/site.css                 # All styles, shared by every page and both languages
     ├── js/activities.js             # Activities page filters
-    ├── js/community-map.js          # Home page contributor map (pan, zoom, clusters)
+    ├── js/community-map.js          # Home page contributor map: clusters on an OpenStreetMap base map
+    ├── vendor/leaflet/              # Leaflet 1.9.4 (BSD-2-Clause), the map library used by the community map
     ├── img/osm-syria-mark.svg       # Logo mark used in the header, footer and banners
     ├── img/syria.svg                # Map of Syria (home hero, community map overlay)
-    ├── img/world-dots.svg           # Dotted world map behind the community map
     ├── osm-syria-logo.svg           # Full community logo (also the favicon)
     ├── icon-48/192/512.png          # PNG icons (favicon, manifest, search-engine logo)
     ├── og-image.png                 # 1200×630 image for link previews on social media
@@ -132,7 +132,7 @@ The script also turns off ad storage, ad personalisation and Google signals, and
 - **Fonts:** [Cairo](https://fonts.google.com/specimen/Cairo) for Arabic and headings, [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans) for English text.
 - **SEO and sharing:** each page has its own title, description, canonical URL, Arabic/English `hreflang` alternates, Open Graph and Twitter Card tags, and schema.org structured data: `Organization`, `WebSite` and `FAQPage` on the home page, an `Event` for every activity on the activities pages, and `BreadcrumbList` on inner pages. The site's name for search engines is **OSM Syria**, with "OpenStreetMap Syria" and the Arabic names as alternates; every page title ends in "OSM Syria (OpenStreetMap Syria)" ("مجتمع OpenStreetMap سوريا (OSM Syria)" in Arabic). When you add an activity card, add its `Event` too, and update `dateModified` and the sitemap's `lastmod` when a page changes. The demo build marks every page `noindex` so it never competes with openstreetmap.sy.
 - **Accessibility:** works at phone width, shows focus outlines, keeps content readable without JavaScript, and turns off animations for visitors who ask for reduced motion.
-- **Privacy:** the community map uses contributor locations rounded to about 20 km, with no names.
+- **Community map data:** the home page map shows the locations members added to the [community map on uMap](https://umap.hotosm.org/en/map/osm-syria-community_133), exactly as placed, with names and all other details removed (only coordinates and a country or governorate label are kept, in `assets/js/community-map.js`). It is a snapshot, not a live feed: to update it, export the uMap layers, keep only the coordinates, label each point with its country (or governorate inside Syria), and recompute the statistics and bars under the map on both home pages.
 
 ### Contributing
 

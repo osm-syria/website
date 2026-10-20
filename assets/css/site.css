@@ -265,54 +265,38 @@ html { scroll-padding-top: 96px; }
 
 .map-card { position: relative; border-radius: 28px; border: 1px solid var(--slate); background: rgba(64, 78, 94, .18); overflow: hidden; }
 /* pan-y keeps the page scrollable on phones; horizontal drags pan the map */
-.map-view { position: relative; aspect-ratio: 1440 / 544; overflow: hidden; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; direction: ltr; }
+/* The map itself is drawn by Leaflet with OpenStreetMap tiles (see community-map.js) */
+.map-view { position: relative; aspect-ratio: 1440 / 600; direction: ltr; background: #aad3df; isolation: isolate; }
+.map-view.leaflet-container { font-family: var(--font-en); }
 .map-view:focus { outline: none; }
-.map-view.is-dragging { cursor: grabbing; }
-.map-stage { position: absolute; inset: 0; transform-origin: 0 0; transition: transform .55s cubic-bezier(.2, .7, .2, 1); }
-.map-view.is-dragging .map-stage { transition: none; }
-.map-stage img { position: absolute; display: block; pointer-events: none; }
-.map-world { left: 0; top: 0; width: 100%; height: 100%; }
-.map-syria { left: 59.868%; top: 31.341%; width: 1.921%; height: 3.760%; opacity: 0; transition: opacity .5s ease; }
+.map-view .leaflet-control-attribution { font-size: 11px; background: rgba(255, 255, 255, .85); }
+.map-view .leaflet-control-attribution a { color: var(--teal-deep); }
 
-.clu {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  border: 0;
-  padding: 0;
-  border-radius: 50%;
-  background: var(--mint);
-  color: var(--night);
-  font-family: var(--font-ar);
-  font-weight: 800;
-  cursor: pointer;
+/* Contributor clusters: teal with a white ring so they stand out on the light map */
+.leaflet-marker-icon.clu {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: left .55s cubic-bezier(.2, .7, .2, 1), top .55s cubic-bezier(.2, .7, .2, 1);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  background: var(--teal);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(34, 36, 42, .35);
   animation: pulse 2.6s ease-out infinite;
 }
-.map-view.is-dragging .clu { transition: none; }
-.clu::before { content: ""; position: absolute; inset: -14px; border-radius: 50%; }
-.clu:hover, .clu:focus-visible { background: var(--white); }
-.clu:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(143, 224, 211, .5); } 100% { box-shadow: 0 0 0 16px rgba(143, 224, 211, 0); } }
+.leaflet-marker-icon.clu:hover, .leaflet-marker-icon.clu:focus-visible { background: var(--night); }
+.leaflet-marker-icon.clu:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(12, 124, 112, .45); } 100% { box-shadow: 0 0 0 14px rgba(12, 124, 112, 0); } }
 
-.map-tip {
-  position: absolute;
-  transform: translate(-50%, calc(-100% - 22px));
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 14px;
-  border-radius: 12px;
-  background: var(--white);
-  color: var(--night);
-  white-space: nowrap;
-  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .6);
-}
+.leaflet-tooltip.map-tip { display: flex; flex-direction: column; align-items: center; padding: 8px 14px; border: 0; border-radius: 12px; background: var(--white); color: var(--night); white-space: nowrap; box-shadow: 0 10px 24px -12px rgba(0, 0, 0, .6); font-family: var(--font-ar); }
+[lang="en"] .leaflet-tooltip.map-tip { font-family: var(--font-en); }
+.leaflet-tooltip.map-tip::before { border-top-color: var(--white); }
 .map-tip b { font-size: 18px; font-weight: 900; line-height: 1.2; color: var(--teal); }
 .map-tip span { font-size: 13px; font-weight: 700; }
+[lang="ar"] .map-tip span { direction: rtl; }
 
 .map-btn { border: 1px solid var(--slate); background: rgba(33, 36, 42, .92); color: var(--white); font-family: var(--font-ar); font-weight: 700; cursor: pointer; }
 [lang="en"] .map-btn { font-family: var(--font-en); }
@@ -343,7 +327,7 @@ html { scroll-padding-top: 96px; }
 /* On phones the map is too short for overlaid controls: move them below it */
 @media (max-width: 760px) {
   .map-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; }
-  .map-view { flex: 1 1 100%; }
+  .map-view { flex: 1 1 100%; aspect-ratio: 4 / 3; }
   .map-regions, .map-zoom { position: static; padding-inline: 12px; }
   .map-zoom { flex-direction: row; }
   .map-legend { position: static; flex: 1 1 100%; margin-inline: 12px; }
