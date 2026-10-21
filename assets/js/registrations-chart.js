@@ -1,7 +1,7 @@
 /* About page: line chart of total member registrations.
-   The data lives in the page's table (one row per month: data-month="YYYY-MM", data-value);
-   this script draws the chart from it, so the table stays the single source and the
-   no-script fallback. Months without a row show as a straight line with no dot. */
+   Drawn from the page's table (one row per month: data-month="YYYY-MM", data-value), which
+   registrations-data.js fills first from the shared data. Months without a row show as a
+   straight line with no dot. */
 (function () {
   'use strict';
 

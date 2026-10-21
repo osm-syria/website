@@ -730,3 +730,9 @@ html.has-dialog { overflow: hidden; }
 
 /* <picture> wrappers (WebP with a JPG fallback) take no part in layout: the <img> inside keeps its styles */
 picture { display: contents; }
+
+/* Tiny OpenStreetMap logo in front of every mention of OpenStreetMap */
+.osm-logo { display: inline-block; width: 1em; height: 1em; margin-inline-end: .25em; vertical-align: -.15em; }
+.osm-mention { color: inherit; white-space: nowrap; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.osm-mention:hover { color: inherit; text-decoration-thickness: 2px; }
+.osm-word { white-space: nowrap; }
