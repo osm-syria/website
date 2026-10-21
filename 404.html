@@ -53,6 +53,7 @@
         <div class="btn-row">
           <a class="btn btn-teal" href="/">العودة إلى الصفحة الرئيسية</a>
         </div>
+        <p class="redirect-note" data-redirect="/">سيتم نقلك إلى الصفحة الرئيسية خلال <b data-countdown>10 ثوانٍ</b>. <button type="button" class="link-btn" data-stay>البقاء في هذه الصفحة</button></p>
       </div>
     </section>
   </main>
@@ -89,6 +90,35 @@
       </div>
     </div>
   </footer>
+  <script>
+    // Missing page: go to the home page after 10 seconds, unless the visitor chooses to stay
+    (function () {
+      var note = document.querySelector('.redirect-note');
+      if (!note) return;
+      var ar = document.documentElement.lang === 'ar';
+      // Under /en/ the Arabic page is swapped for the English one, which runs its own countdown
+      if (ar && location.pathname.indexOf('/en/') === 0) return;
+      var counter = note.querySelector('[data-countdown]');
+      var left = 10;
+      var unit = function (n) {
+        if (!ar) return n + (n === 1 ? ' second' : ' seconds');
+        return n === 1 ? 'ثانية واحدة' : n === 2 ? 'ثانيتين' : n <= 10 ? n + ' ثوانٍ' : n + ' ثانية';
+      };
+      var timer = setInterval(function () {
+        left -= 1;
+        if (left <= 0) {
+          clearInterval(timer);
+          location.replace(note.getAttribute('data-redirect'));
+          return;
+        }
+        counter.textContent = unit(left);
+      }, 1000);
+      note.querySelector('[data-stay]').addEventListener('click', function () {
+        clearInterval(timer);
+        note.textContent = ar ? 'لن يتم نقلك. يمكنك العودة إلى الصفحة الرئيسية في أي وقت.' : 'You’ll stay on this page. You can go back to the home page at any time.';
+      });
+    })();
+  </script>
   <script src="/assets/js/site.js" defer></script>
 </body>
 </html>

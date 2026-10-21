@@ -649,6 +649,10 @@ html.has-dialog { overflow: hidden; }
 .notfound .code { margin: 0; font-size: clamp(72px, 12vw, 128px); line-height: 1; font-weight: 900; color: var(--mint); }
 .notfound p { margin: 0; font-size: 19px; color: var(--line); }
 .notfound .btn-row { margin-top: 18px; justify-content: center; }
+.notfound .redirect-note { margin-top: 10px; font-size: 15px; color: var(--soft); }
+.notfound .redirect-note b { color: var(--white); font-weight: 700; }
+.link-btn { padding: 0; border: 0; background: none; font: inherit; color: var(--mint); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link-btn:hover { color: var(--white); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
