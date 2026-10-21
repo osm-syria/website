@@ -649,6 +649,10 @@ html.has-dialog { overflow: hidden; }
 .notfound .code { margin: 0; font-size: clamp(72px, 12vw, 128px); line-height: 1; font-weight: 900; color: var(--mint); }
 .notfound p { margin: 0; font-size: 19px; color: var(--line); }
 .notfound .btn-row { margin-top: 18px; justify-content: center; }
+.notfound .redirect-note { margin-top: 10px; font-size: 15px; color: var(--soft); }
+.notfound .redirect-note b { color: var(--white); font-weight: 700; }
+.link-btn { padding: 0; border: 0; background: none; font: inherit; color: var(--mint); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link-btn:hover { color: var(--white); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -730,3 +734,9 @@ html.has-dialog { overflow: hidden; }
 
 /* <picture> wrappers (WebP with a JPG fallback) take no part in layout: the <img> inside keeps its styles */
 picture { display: contents; }
+
+/* Tiny OpenStreetMap logo in front of every mention of OpenStreetMap */
+.osm-logo { display: inline-block; width: 1em; height: 1em; margin-inline-end: .25em; vertical-align: -.15em; }
+.osm-mention { color: inherit; white-space: nowrap; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.osm-mention:hover { color: inherit; text-decoration-thickness: 2px; }
+.osm-word { white-space: nowrap; }

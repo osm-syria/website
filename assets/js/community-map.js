@@ -46,7 +46,11 @@
     damascus: [[33.25, 35.95], [33.8, 36.7]],   // the city and Rural Damascus around it
     aleppo: [[36.0, 36.85], [36.4, 37.45]]
   };
-  var CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+  // The OSM logo sits next to the credit, as next to every mention of OpenStreetMap; its path is found from the Leaflet stylesheet's
+  var css = document.querySelector('link[href*="vendor/leaflet/leaflet.css"]');
+  var logo = css ? css.getAttribute('href').replace('vendor/leaflet/leaflet.css', 'img/osm/osm-logo-48.png') : '';
+  var CREDIT = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener"><span class="osm-word">' +
+    (logo ? '<img class="osm-logo" src="' + logo + '" alt="" width="16" height="16">' : '') + 'OpenStreetMap</span></a> contributors';
 
   var map = L.map(view, {
     zoomControl: false,

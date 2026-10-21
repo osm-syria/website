@@ -53,6 +53,7 @@
         <div class="btn-row">
           <a class="btn btn-teal" href="/">العودة إلى الصفحة الرئيسية</a>
         </div>
+        <p class="redirect-note" data-redirect="/">سيتم نقلك إلى الصفحة الرئيسية خلال <b data-countdown>10 ثوانٍ</b>. <button type="button" class="link-btn" data-stay>البقاء في هذه الصفحة</button></p>
       </div>
     </section>
   </main>
@@ -65,7 +66,7 @@
             <span class="mark-tile"><img src="/assets/img/osm-syria-mark.svg" alt="" width="36" height="39"></span>
             <span class="wordmark" lang="en"><b>OSM SYRIA</b><small>COMMUNITY</small></span>
           </span>
-          <p>مجتمع تطوعي مفتوح المصدر مبني حول OpenStreetMap. توثيق أنشطتنا واجتماعاتنا عام ومفتوح للجميع.</p>
+          <p>مجتمع تطوعي مفتوح المصدر مبني حول <span class="osm-word"><img class="osm-logo" src="/assets/img/osm/osm-logo-48.png" alt="" width="16" height="16">OpenStreetMap</span>. توثيق أنشطتنا واجتماعاتنا عام ومفتوح للجميع.</p>
         </div>
         <nav class="footer-nav" aria-label="صفحات الموقع">
           <a href="/about/">عن المجتمع</a>
@@ -85,10 +86,39 @@
       <div class="footer-bottom">
         <span>© <span data-copyright-year>2026</span> مجتمع OSM سوريا · صُنع بحبّ من متطوعي مجتمع OSM سوريا و<a href="https://github.com/osm-syria/website/graphs/contributors" target="_blank" rel="noopener">المساهمين في تطوير الموقع</a> · <span class="domain" lang="en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fe0d3" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>openstreetmap.sy</span></span>
         <span class="last-update" hidden>آخر تحديث للموقع: <a target="_blank" rel="noopener"><time></time></a></span>
-        <span>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">مساهمو OpenStreetMap</a></span>
+        <span>بيانات الخريطة © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">مساهمو <span class="osm-word"><img class="osm-logo" src="/assets/img/osm/osm-logo-48.png" alt="" width="16" height="16">OpenStreetMap</span></a></span>
       </div>
     </div>
   </footer>
+  <script>
+    // Missing page: go to the home page after 10 seconds, unless the visitor chooses to stay
+    (function () {
+      var note = document.querySelector('.redirect-note');
+      if (!note) return;
+      var ar = document.documentElement.lang === 'ar';
+      // Under /en/ the Arabic page is swapped for the English one, which runs its own countdown
+      if (ar && location.pathname.indexOf('/en/') === 0) return;
+      var counter = note.querySelector('[data-countdown]');
+      var left = 10;
+      var unit = function (n) {
+        if (!ar) return n + (n === 1 ? ' second' : ' seconds');
+        return n === 1 ? 'ثانية واحدة' : n === 2 ? 'ثانيتين' : n <= 10 ? n + ' ثوانٍ' : n + ' ثانية';
+      };
+      var timer = setInterval(function () {
+        left -= 1;
+        if (left <= 0) {
+          clearInterval(timer);
+          location.replace(note.getAttribute('data-redirect'));
+          return;
+        }
+        counter.textContent = unit(left);
+      }, 1000);
+      note.querySelector('[data-stay]').addEventListener('click', function () {
+        clearInterval(timer);
+        note.textContent = ar ? 'لن يتم نقلك. يمكنك العودة إلى الصفحة الرئيسية في أي وقت.' : 'You’ll stay on this page. You can go back to the home page at any time.';
+      });
+    })();
+  </script>
   <script src="/assets/js/site.js" defer></script>
 </body>
 </html>
