@@ -111,7 +111,7 @@ python3 -m http.server 8000
 
 ### Visit statistics (Google Analytics)
 
-The site counts visits with Google Analytics 4, **only after the visitor accepts** in a consent bar. Declining (or not choosing) means nothing loads and nothing is sent. Statistics only run on `openstreetmap.sy`, never on the demo or a local copy. What is and isn't collected is explained on the privacy page (`privacy/` and `en/privacy/`); keep it accurate if you change any of the settings below.
+The site counts visits with Google Analytics 4, **on by default**: it starts on the first visit, and a one-time bar tells visitors so, with a Close button and a link to the privacy settings. Visitors can turn statistics off (or back on) on the privacy page; turning them off also deletes the statistics cookie. **Note:** in the EU (GDPR/ePrivacy), analytics cookies normally need consent *before* they are set, so this opt-out model is a legal risk for EU visitors. Statistics only run on `openstreetmap.sy`, never on the demo or a local copy. What is and isn't collected is explained on the privacy page (`privacy/` and `en/privacy/`); keep it accurate if you change any of the settings below.
 
 To switch it on:
 
@@ -123,7 +123,7 @@ To switch it on:
    - Don't link the property to Google Ads.
 3. Paste the ID into `GA_ID` near the top of the statistics code in `assets/js/site.js`, then commit and deploy.
 
-The script also turns off ad storage, ad personalisation and Google signals, and sets the analytics cookie to expire after 6 months. Visitors can change their choice from the privacy page.
+The script also turns off ad storage, ad personalisation and Google signals, and sets the analytics cookie to expire after 6 months. Visitors can turn statistics off or on from the privacy page (`privacy/#settings`).
 
 ### Design notes
 
