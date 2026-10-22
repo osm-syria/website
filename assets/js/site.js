@@ -70,15 +70,19 @@
     }
   }
 
-  // Visit statistics with Google Analytics, only after the visitor accepts.
-  // Paste the GA4 Measurement ID below (it looks like G-XXXXXXXXXX). Until then, and on any
-  // domain other than openstreetmap.sy (the demo, local copies), nothing loads and no banner shows.
+  // Visit statistics with Google Analytics: on by default, with a one-time notice, and a switch on
+  // the privacy page to turn them off. Only runs on openstreetmap.sy (never on the demo or a local copy).
+  // Stored choice: 'denied' = turned off; anything else = on ('granted' also hides the notice).
   var GA_ID = 'G-0JK1E7B6K9';
   var CONSENT = 'osm-syria:analytics';
   var analyticsOn = /^G-[A-Z0-9]+$/.test(GA_ID) && /^(www\.)?openstreetmap\.sy$/i.test(location.hostname);
   var arA = document.documentElement.lang === 'ar';
   var readChoice = function () { try { return localStorage.getItem(CONSENT); } catch (e) { return null; } };
   var saveChoice = function (v) { try { if (v) localStorage.setItem(CONSENT, v); else localStorage.removeItem(CONSENT); } catch (e) { /* storage blocked */ } };
+  var siteRoot = function () {   // the manifest link leads back to the site root from any page
+    var link = document.querySelector('link[rel="manifest"]');
+    return link ? link.getAttribute('href').replace(/site\.webmanifest$/, '') : '/';
+  };
 
   function loadAnalytics() {
     window.dataLayer = window.dataLayer || [];
@@ -93,53 +97,59 @@
     document.head.appendChild(tag);
   }
 
-  function askConsent() {
-    var privacy = (arA ? '' : 'en/');
-    var root = document.querySelector('link[rel="manifest"]');   // its href leads back to the site root from any page
-    var base = root ? root.getAttribute('href').replace(/site\.webmanifest$/, '') : '/';
+  function showNotice() {
+    var privacyPage = siteRoot() + (arA ? '' : 'en/') + 'privacy/#settings';
     var bar = document.createElement('aside');
     bar.className = 'consent-bar';
     bar.setAttribute('aria-label', arA ? 'إحصاء الزيارات' : 'Visit statistics');
     bar.innerHTML =
       '<p>' + (arA
-        ? 'نودّ إحصاء الزيارات عبر Google Analytics لتحسين الموقع. الإحصاء <b>مجهول الهوية</b>: لا نعرف أبداً من أنت، ولا يُجمع شيء ما لم توافق. <a href="' + base + 'privacy/">تفاصيل الخصوصية</a>'
-        : 'We’d like to count visits with Google Analytics to improve this website. It’s <b>anonymous</b>: we never know who you are, and nothing is collected unless you accept. <a href="' + base + privacy + 'privacy/">Privacy details</a>') +
+        ? 'يحصي هذا الموقع الزيارات بشكل <b>مجهول الهوية</b> عبر Google Analytics لنتمكن من تحسينه. لا نعرف أبداً من أنت.'
+        : 'This website counts visits <b>anonymously</b> with Google Analytics, so we can improve it. We never know who you are.') +
       '</p><div class="consent-actions">' +
-        '<button type="button" class="btn btn-teal btn-sm" data-consent="granted">' + (arA ? 'موافق' : 'Accept') + '</button>' +
-        '<button type="button" class="btn btn-outline-white btn-sm" data-consent="denied">' + (arA ? 'رفض' : 'Decline') + '</button>' +
+        '<button type="button" class="btn btn-teal btn-sm" data-close>' + (arA ? 'إغلاق' : 'Close') + '</button>' +
+        '<a class="consent-settings" href="' + privacyPage + '">' + (arA ? 'إعدادات الخصوصية' : 'Privacy settings') + '</a>' +
       '</div>';
-    bar.addEventListener('click', function (event) {
-      var button = event.target.closest('[data-consent]');
-      if (!button) return;
-      var choice = button.getAttribute('data-consent');
-      saveChoice(choice);
+    bar.querySelector('[data-close]').addEventListener('click', function () {
+      saveChoice('granted');   // seen: don't show the notice again
       bar.remove();
-      if (choice === 'granted') loadAnalytics();
     });
     document.body.appendChild(bar);
   }
 
   if (analyticsOn) {
     var choice = readChoice();
-    if (choice === 'granted') loadAnalytics();
-    else if (choice !== 'denied') askConsent();
+    if (choice !== 'denied') loadAnalytics();
+    if (choice === null && !document.querySelector('[data-analytics-toggle]')) showNotice();   // the privacy page explains it already
   }
 
-  // Privacy page: "Change my choice" forgets the choice, deletes the analytics cookies and asks again
-  var reset = document.querySelector('[data-analytics-reset]');
-  if (reset) {
+  // Privacy page: switch statistics off (forget the cookie) or back on
+  var toggle = document.querySelector('[data-analytics-toggle]');
+  if (toggle) {
+    var status = document.querySelector('[data-analytics-status]');
     if (analyticsOn) {
-      reset.hidden = false;
-      reset.addEventListener('click', function () {
-        saveChoice(null);
-        document.cookie.split(';').forEach(function (c) {
-          var name = c.split('=')[0].trim();
-          if (/^_ga/.test(name)) {
-            ['', '; domain=' + location.hostname, '; domain=.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
-              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
-            });
-          }
-        });
+      var isOff = readChoice() === 'denied';
+      status.textContent = isOff
+        ? (arA ? 'إحصاء الزيارات متوقف في هذا المتصفح.' : 'Visit statistics are off in this browser.')
+        : (arA ? 'إحصاء الزيارات مفعّل في هذا المتصفح.' : 'Visit statistics are on in this browser.');
+      toggle.textContent = isOff
+        ? (arA ? 'تفعيل إحصاء الزيارات' : 'Turn on visit statistics')
+        : (arA ? 'إيقاف إحصاء الزيارات' : 'Turn off visit statistics');
+      status.hidden = toggle.hidden = false;
+      toggle.addEventListener('click', function () {
+        if (isOff) {
+          saveChoice('granted');
+        } else {
+          saveChoice('denied');
+          document.cookie.split(';').forEach(function (c) {   // remove the statistics cookie too
+            var name = c.split('=')[0].trim();
+            if (/^_ga/.test(name)) {
+              ['', '; domain=' + location.hostname, '; domain=.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
+              });
+            }
+          });
+        }
         location.reload();
       });
     } else {

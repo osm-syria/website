@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy · OSM Syria (OpenStreetMap Syria)</title>
-  <meta name="description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, only if you agree. What is collected, what never is, and how to change your choice.">
+  <meta name="description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, on by default and easy to turn off. What is collected, and what never is.">
   <meta name="author" content="OpenStreetMap Syria Community">
   <meta name="application-name" content="OSM Syria">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -23,7 +23,7 @@
   <meta property="og:site_name" content="OSM Syria">
   <meta property="og:url" content="https://openstreetmap.sy/en/privacy/">
   <meta property="og:title" content="Privacy · OSM Syria (OpenStreetMap Syria)">
-  <meta property="og:description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, only if you agree. What is collected, what never is, and how to change your choice.">
+  <meta property="og:description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, on by default and easy to turn off. What is collected, and what never is.">
   <meta property="og:image" content="https://openstreetmap.sy/assets/og-image.png">
   <meta property="og:image:secure_url" content="https://openstreetmap.sy/assets/og-image.png">
   <meta property="og:image:type" content="image/png">
@@ -36,7 +36,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Privacy · OSM Syria (OpenStreetMap Syria)">
-  <meta name="twitter:description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, only if you agree. What is collected, what never is, and how to change your choice.">
+  <meta name="twitter:description" content="How the OSM Syria website counts visits: anonymous statistics with Google Analytics, on by default and easy to turn off. What is collected, and what never is.">
   <meta name="twitter:image" content="https://openstreetmap.sy/assets/og-image.png">
   <meta name="twitter:image:alt" content="OSM Syria logo with the text OpenStreetMap Syria Community">
 
@@ -63,7 +63,7 @@
           "@id": "https://openstreetmap.sy/#organization"
         },
         "primaryImageOfPage": "https://openstreetmap.sy/assets/og-image.png",
-        "dateModified": "2026-10-16"
+        "dateModified": "2026-10-22"
       },
       {
         "@type": "BreadcrumbList",
@@ -127,14 +127,14 @@
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           <div>
             <b>Anonymous: we never know who you are.</b>
-            <p>We only see totals, such as how many people visited the activities page this month. Nothing is collected unless you agree.</p>
+            <p>We only see totals, such as how many people visited the activities page this month. You can turn statistics off at any time.</p>
           </div>
         </div>
 
-        <h2>Nothing is collected unless you agree</h2>
-        <p>On your first visit, a bar at the bottom of the page asks whether you accept visit statistics. Google Analytics only loads if you choose <b>Accept</b>. If you choose <b>Decline</b>, or don’t choose, nothing is sent and the website works exactly the same.</p>
+        <h2>Visit statistics are on by default</h2>
+        <p>From your first visit, Google Analytics counts your visit anonymously, and a small bar at the bottom of the page tells you so. You can close it, or <a href="#settings">turn statistics off</a> below. If you turn them off, nothing more is sent and the website works exactly the same.</p>
 
-        <h2>What is collected if you accept</h2>
+        <h2>What is collected</h2>
         <ul class="dot-list">
           <li>The pages you view, and when</li>
           <li>The website or link that brought you here</li>
@@ -164,15 +164,16 @@
         </ul>
         <p>Links to YouTube, Google Forms, Telegram and other websites take you to those services, which have their own privacy policies.</p>
 
-        <h2>Change your choice</h2>
-        <p>You can change your mind at any time. Your choice is saved only in your own browser.</p>
+        <h2 id="settings">Turn statistics off or on</h2>
+        <p>You can change this at any time. Your choice is saved only in your own browser, and turning statistics off also deletes the statistics cookie.</p>
         <p class="analytics-off" hidden>Visit statistics are not active on this copy of the website.</p>
-        <button type="button" class="btn btn-outline btn-md" data-analytics-reset hidden>Change my choice</button>
+        <p class="analytics-status" data-analytics-status hidden></p>
+        <button type="button" class="btn btn-outline btn-md" data-analytics-toggle hidden>Turn off visit statistics</button>
 
         <h2>Questions</h2>
         <p>Ask us on our <a href="https://t.me/OSMSyira" target="_blank" rel="noopener">Telegram channel</a>.</p>
 
-        <p class="privacy-updated">This page was last updated on 15 October 2026.</p>
+        <p class="privacy-updated">This page was last updated on 22 October 2026.</p>
       </div>
     </section>
   </main>
