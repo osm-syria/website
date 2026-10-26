@@ -37,6 +37,9 @@ body {
 
 [lang="en"] { font-family: var(--font-en); }
 [lang="ar"] { font-family: var(--font-ar); }
+/* body sets its own font-family, so the html[lang] rule above cannot reach it */
+html[lang="en"] body { font-family: var(--font-en); }
+html[lang="en"] .btn { font-family: var(--font-en); font-weight: 600; }
 /* Embedded second-language text keeps its own direction (punctuation, numbers) */
 [dir="rtl"] [lang="en"] { direction: ltr; unicode-bidi: isolate; }
 [dir="ltr"] [lang="ar"] { direction: rtl; unicode-bidi: isolate; }
@@ -48,6 +51,17 @@ a { color: var(--teal); }
 a:hover { color: var(--teal-deep); }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
 .on-dark a:focus-visible, .on-dark button:focus-visible { outline-color: var(--mint); }
+/* Red on teal is only about 1.2:1; use a light inner ring with a dark outer ring on teal surfaces. */
+.btn-teal:focus-visible,
+.bg-teal a:focus-visible,
+.bg-teal button:focus-visible,
+.join-banner a:focus-visible,
+.start-card a:focus-visible,
+.www-what a:focus-visible,
+.ba-links a:focus-visible {
+  outline-color: var(--white);
+  box-shadow: 0 0 0 6px var(--night);
+}
 
 [hidden] { display: none !important; }
 
@@ -267,6 +281,18 @@ html { scroll-padding-top: 96px; }
 /* pan-y keeps the page scrollable on phones; horizontal drags pan the map */
 /* The map itself is drawn by Leaflet with OpenStreetMap tiles (see community-map.js) */
 .map-view { position: relative; aspect-ratio: 1440 / 600; direction: ltr; background: #aad3df; isolation: isolate; }
+/* Shown until Leaflet takes over, and left in place if the map script cannot run */
+.map-fallback { position: absolute; inset: 0; margin: 0; padding: 24px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--night); font-size: 16px; font-weight: 600; }
+.map-fallback a { color: var(--teal-deep); }
+/* .map-view is ltr for Leaflet; the fallback must follow the page language instead */
+[dir="rtl"] .map-fallback { direction: rtl; }
+[dir="ltr"] .map-fallback { direction: ltr; }
+/* Leaflet adds .leaflet-container; hide the fallback even if an older cached script did not remove it */
+.map-view.leaflet-container .map-fallback { display: none; }
+/* Without a working map, the map controls would do nothing: keep only the fallback link */
+.map-view:not(.leaflet-container) ~ .map-regions,
+.map-view:not(.leaflet-container) ~ .map-zoom,
+.map-view:not(.leaflet-container) ~ .map-legend { display: none; }
 .map-view.leaflet-container { font-family: var(--font-en); }
 .map-view:focus { outline: none; }
 .map-view .leaflet-control-attribution { font-size: 11px; background: rgba(255, 255, 255, .85); }
@@ -668,6 +694,8 @@ html.has-dialog { overflow: hidden; }
 .growth-figure small { font-size: 14px; font-weight: 500; color: var(--slate); }
 .chart-card { margin: 0; padding: clamp(18px, 3vw, 28px); border-radius: 24px; border: 1px solid var(--line); background: var(--white); display: flex; flex-direction: column; gap: 14px; }
 .chart-plot { position: relative; min-height: 240px; }
+/* Shown until registrations-chart.js draws the chart, and left in place if it cannot run */
+.chart-fallback { position: absolute; inset: 0; margin: 0; padding: 24px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--slate); font-size: 15px; font-weight: 600; }
 .chart-plot svg { display: block; overflow: visible; font-family: inherit; }
 .chart-plot .grid { stroke: #ebebeb; stroke-width: 1; }
 .chart-plot .baseline { stroke: #bdbdbd; stroke-width: 1; }
@@ -720,6 +748,10 @@ html.has-dialog { overflow: hidden; }
 .consent-bar p { flex: 1 1 360px; margin: 0; font-size: 15px; line-height: 1.6; }
 .consent-bar a { color: var(--mint); font-weight: 600; }
 .consent-actions { display: flex; align-items: center; gap: 10px 18px; flex-wrap: wrap; }
+/* Reject stays available but deliberately quieter than the primary Accept button */
+.consent-reject { padding: 0; border: 0; background: none; color: var(--line); font: inherit; font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.consent-reject:hover { color: var(--white); }
+.consent-reject:focus-visible { outline-color: var(--mint); }
 .consent-bar .consent-settings { font-size: 14px; font-weight: 500; color: var(--line); text-decoration: underline; text-underline-offset: 3px; }
 .consent-bar .consent-settings:hover { color: var(--white); }
 .analytics-status { font-weight: 600; color: var(--ink) !important; }
