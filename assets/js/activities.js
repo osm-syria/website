@@ -10,7 +10,9 @@
   var controls = root.querySelector('.filters');
   var empty = root.querySelector('.empty-state');
   var cards = Array.prototype.slice.call(root.querySelectorAll('.card[data-type]'));
-  var today = new Date().toISOString().slice(0, 10);
+  // Local date, not UTC: in Syria a UTC date is still yesterday until 03:00 local time
+  var now = new Date();
+  var today = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
   var state = { when: 'past', type: 'all' };
 
   cards.forEach(function (card) {

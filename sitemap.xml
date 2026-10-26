@@ -4,7 +4,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://openstreetmap.sy/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/"/>
@@ -16,7 +16,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/about/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/about/"/>
@@ -25,7 +25,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/goals/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/goals/"/>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/activities/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/"/>
@@ -43,7 +43,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/activities/douma-workshop/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/douma-workshop/"/>
@@ -52,7 +52,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/join/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/join/"/>
@@ -61,7 +61,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/"/>
@@ -73,7 +73,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/about/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/about/"/>
@@ -82,7 +82,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/goals/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/goals/"/>
@@ -91,7 +91,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/activities/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/"/>
@@ -100,7 +100,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/activities/douma-workshop/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/activities/douma-workshop/"/>
@@ -109,7 +109,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/join/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/join/"/>
@@ -118,7 +118,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/privacy/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/privacy/"/>
@@ -127,7 +127,7 @@
   </url>
   <url>
     <loc>https://openstreetmap.sy/en/privacy/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://openstreetmap.sy/privacy/"/>

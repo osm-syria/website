@@ -38,18 +38,42 @@
   });
 
   var updated = document.querySelector('.last-update');
+  var pageModified = null;
+  if (updated) {
+    var ld = document.querySelector('script[type="application/ld+json"]');
+    if (ld) {
+      try {
+        var ldData = JSON.parse(ld.textContent);
+        var nodes = ldData['@graph'] || [ldData];
+        for (var i = 0; i < nodes.length; i++) {
+          if (nodes[i].dateModified) { pageModified = nodes[i].dateModified; break; }
+        }
+      } catch (e) { /* malformed structured data: fall back to the commit date */ }
+    }
+  }
   if (updated && /^https?:$/.test(location.protocol)) {
     var branch = /^demo\./i.test(location.hostname) ? 'develop' : 'main';
     var CACHE = 'osm-syria:last-update:' + branch;
     var showDate = function (iso) {
-      var date = new Date(iso);
+      // A date-only value (the page's dateModified) must be read as local midnight,
+      // otherwise visitors west of UTC can see the previous day.
+      var date = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? new Date(iso + 'T00:00:00') : new Date(iso);
       if (isNaN(date)) return;
+      var shown = iso;
+      if (pageModified) {
+        // The page may be newer than the last commit (for example while a change is being reviewed)
+        var pageDate = /^\d{4}-\d{2}-\d{2}$/.test(pageModified) ? new Date(pageModified + 'T00:00:00') : new Date(pageModified);
+        if (!isNaN(pageDate) && pageDate > date) {
+          date = pageDate;
+          shown = pageModified;
+        }
+      }
       var arU = document.documentElement.lang === 'ar';
       var months = arU
         ? ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
         : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       var time = updated.querySelector('time');
-      time.setAttribute('datetime', iso);
+      time.setAttribute('datetime', shown);
       time.textContent = date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
       updated.querySelector('a').href = 'https://github.com/osm-syria/website/commits/' + branch + '/';
       updated.hidden = false;
@@ -66,7 +90,9 @@
           try { localStorage.setItem(CACHE, JSON.stringify({ date: iso, at: Date.now() })); } catch (e) { /* storage blocked */ }
           showDate(iso);
         })
-        .catch(function () { if (cached) showDate(cached.date); });   // offline or rate-limited: an older date beats none
+        .catch(function () { if (cached) showDate(cached.date); else if (pageModified) showDate(pageModified); });   // offline or rate-limited: an older date beats none
+    } else if (pageModified) {
+      showDate(pageModified);
     }
   }
 
@@ -82,6 +108,15 @@
   var siteRoot = function () {   // the manifest link leads back to the site root from any page
     var link = document.querySelector('link[rel="manifest"]');
     return link ? link.getAttribute('href').replace(/site\.webmanifest$/, '') : '/';
+  };
+  var clearAnalyticsCookies = function () {   // used when statistics are turned off or rejected
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (!/^_ga/.test(name)) return;
+      ['', '; domain=' + location.hostname, '; domain=.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
+      });
+    });
   };
 
   function loadAnalytics() {
@@ -107,12 +142,18 @@
         ? 'يحصي هذا الموقع الزيارات بشكل <b>مجهول الهوية</b> عبر Google Analytics لنتمكن من تحسينه. لا نعرف أبداً من أنت.'
         : 'This website counts visits <b>anonymously</b> with Google Analytics, so we can improve it. We never know who you are.') +
       '</p><div class="consent-actions">' +
-        '<button type="button" class="btn btn-teal btn-sm" data-close>' + (arA ? 'إغلاق' : 'Close') + '</button>' +
+        '<button type="button" class="btn btn-teal btn-sm" data-accept>' + (arA ? 'قبول' : 'Accept') + '</button>' +
+        '<button type="button" class="consent-reject" data-reject>' + (arA ? 'رفض' : 'Reject') + '</button>' +
         '<a class="consent-settings" href="' + privacyPage + '">' + (arA ? 'إعدادات الخصوصية' : 'Privacy settings') + '</a>' +
       '</div>';
-    bar.querySelector('[data-close]').addEventListener('click', function () {
+    bar.querySelector('[data-accept]').addEventListener('click', function () {
       saveChoice('granted');   // seen: don't show the notice again
       bar.remove();
+    });
+    bar.querySelector('[data-reject]').addEventListener('click', function () {
+      saveChoice('denied');
+      clearAnalyticsCookies();
+      location.reload();       // reopen this page with statistics off
     });
     document.body.appendChild(bar);
   }
@@ -141,14 +182,7 @@
           saveChoice('granted');
         } else {
           saveChoice('denied');
-          document.cookie.split(';').forEach(function (c) {   // remove the statistics cookie too
-            var name = c.split('=')[0].trim();
-            if (/^_ga/.test(name)) {
-              ['', '; domain=' + location.hostname, '; domain=.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
-                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' + d;
-              });
-            }
-          });
+          clearAnalyticsCookies();   // remove the statistics cookie too
         }
         location.reload();
       });

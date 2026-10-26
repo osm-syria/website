@@ -44,11 +44,15 @@
   function draw() {
     width = plot.clientWidth;
     if (!width) return;
+    var fallback = plot.querySelector('.chart-fallback');
+    if (fallback) fallback.parentNode.removeChild(fallback);
     var narrow = width < 520;
     var height = narrow ? 240 : 300;
     var m = { top: 28, right: narrow ? 34 : 44, bottom: 34, left: 38 };
     var w = width - m.left - m.right, h = height - m.top - m.bottom;
-    var max = 250;
+    // Follow the data: a fixed 250 clipped the line once registrations passed it
+    var highest = Math.max.apply(null, data.map(function (d) { return d.value; }));
+    var max = Math.max(50, Math.ceil(highest / 50) * 50);
     var x = function (i) { return m.left + (i / span) * w; };
     var y = function (v) { return m.top + h - (v / max) * h; };
 
