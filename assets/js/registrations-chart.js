@@ -1,6 +1,6 @@
 /* About page: line chart of total member registrations.
    Drawn from the page's table (one row per month: data-month="YYYY-MM", data-value), which
-   registrations-data.js fills first from the shared data. Months without a row show as a
+   registrations-data.js fills from the live data; the chart is drawn once the data arrives. Months without a row show as a
    straight line with no dot. */
 (function () {
   'use strict';
@@ -9,7 +9,6 @@
   if (!figure) return;
 
   var plot = figure.querySelector('.chart-plot');
-  var rows = figure.querySelectorAll('tr[data-month]');
   var ar = document.documentElement.lang === 'ar';
   var MONTHS = ar
     ? ['كانون الثاني', 'شباط', 'آذار', 'نيسان', 'أيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين الأول', 'تشرين الثاني', 'كانون الأول']
@@ -17,14 +16,20 @@
   var SHORT = ar ? MONTHS : MONTHS.map(function (m) { return m.slice(0, 3); });
   var unit = function (n) { return ar ? n + ' تسجيلاً' : n + ' registrations'; };
 
-  var data = Array.prototype.map.call(rows, function (row) {
-    var ym = row.getAttribute('data-month').split('-');
-    return { y: +ym[0], m: +ym[1] - 1, value: +row.getAttribute('data-value'), note: row.getAttribute('data-note') || '' };
-  });
-  if (data.length < 2) return;
-  var start = data[0].y * 12 + data[0].m;
-  data.forEach(function (d) { d.i = d.y * 12 + d.m - start; });
-  var span = data[data.length - 1].i;
+  var data, span;
+  function readTable() {
+    var rows = figure.querySelectorAll('tr[data-month]');
+    data = Array.prototype.map.call(rows, function (row) {
+      var ym = row.getAttribute('data-month').split('-');
+      return { y: +ym[0], m: +ym[1] - 1, value: +row.getAttribute('data-value'), note: row.getAttribute('data-note') || '' };
+    });
+    if (data.length < 2) return false;
+    var start = data[0].y * 12 + data[0].m;
+    data.forEach(function (d) { d.i = d.y * 12 + d.m - start; });
+    span = data[data.length - 1].i;
+    return true;
+  }
+  readTable();   // empty until registrations-data.js fills the table from the live data
 
   var NS = 'http://www.w3.org/2000/svg';
   function el(name, attrs, parent) {
@@ -43,7 +48,7 @@
 
   function draw() {
     width = plot.clientWidth;
-    if (!width) return;
+    if (!width || !data || data.length < 2) return;
     var fallback = plot.querySelector('.chart-fallback');
     if (fallback) fallback.parentNode.removeChild(fallback);
     var narrow = width < 520;
@@ -120,6 +125,8 @@
   }
 
   draw();
+  // registrations-data.js refills the table when live numbers arrive: redraw from it
+  document.addEventListener('osm-syria:registrations', function () { if (readTable()) draw(); });
   if (window.ResizeObserver) {
     var last = plot.clientWidth;
     new ResizeObserver(function () {
