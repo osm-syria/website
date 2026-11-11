@@ -775,3 +775,15 @@ picture { display: contents; }
 .osm-mention { color: inherit; white-space: nowrap; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .osm-mention:hover { color: inherit; text-decoration-thickness: 2px; }
 .osm-word { white-space: nowrap; }
+
+/* Live registration figures (registrations-data.js): loading and error states */
+.chart-status { margin: 0; font-size: 15px; color: var(--slate); }
+.chart-status:empty { display: none; }
+[data-registrations-chart][data-state="loading"] .chart-plot svg { display: none; }
+[data-registrations-chart][data-state="error"] .chart-status { padding: 14px 16px; border-radius: 14px; background: #fdecec; color: #8a1c1c; font-weight: 600; }
+[data-registrations-chart][data-state="error"] .chart-plot,
+[data-registrations-chart][data-state="error"] .chart-table,
+[data-registrations-chart][data-state="error"] .chart-note { display: none; }
+.growth-figure[hidden] { display: none; }
+.stat[data-state="loading"] b { opacity: .5; }
+.stat[data-state="error"] span { font-size: 14px; color: var(--soft); }
